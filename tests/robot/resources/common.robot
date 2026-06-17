@@ -7,13 +7,18 @@ Library           Collections
 ${BASE_URL}                 http://localhost:3000
 ${BROWSER}                  chromium
 ${HEADLESS}                 ${True}
+${CHROME_CHANNEL}           ${EMPTY}
 ${EXPECTED_PAGE_TITLE}      CV Portfolio
 ${EXPECTED_HERO_HEADING}    Quality assurance and test automation
 ${NAV_LINKS}                Home|About|Skills|QA Portfolio|Projects|CV|Contact
 
 *** Keywords ***
 Suite Browser Setup
-    New Browser    ${BROWSER}    headless=${HEADLESS}
+    IF    '${CHROME_CHANNEL}' != '${EMPTY}'
+        New Browser    ${BROWSER}    headless=${HEADLESS}    channel=${CHROME_CHANNEL}
+    ELSE
+        New Browser    ${BROWSER}    headless=${HEADLESS}
+    END
 
 Suite Browser Teardown
     Close Browser

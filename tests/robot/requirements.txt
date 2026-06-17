@@ -1,6 +1,7 @@
 # Robot Framework UI test dependencies (CI and local runs).
 # Fully pinned — avoids slow pip dependency resolution on GitHub Actions.
-# Install: pip install -r tests/robot/requirements.txt && rfbrowser init chromium
+# Local: pip install -r tests/robot/requirements.txt && rfbrowser init chromium
+# CI: uses system Chrome (setup-chrome) — rfbrowser init --skip-browsers, no Chromium download
 robotframework==7.2.2
 robotframework-browser==18.9.1
 grpcio==1.66.2

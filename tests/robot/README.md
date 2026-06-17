@@ -9,8 +9,10 @@ Browser-based UI automation for the CV portfolio using [Robot Framework](https:/
 
 ```bash
 pip install -r tests/robot/requirements.txt
-rfbrowser init
+rfbrowser init chromium
 ```
+
+CI uses system Chrome via `CHROME_CHANNEL=chrome` and skips the Chromium download (`rfbrowser init --skip-browsers`).
 
 ## Start the application
 
@@ -97,20 +99,15 @@ Defined in `resources/common.robot`:
 |----------|---------|-------------|
 | `BASE_URL` | `http://localhost:3000` | Application base URL |
 | `BROWSER` | `chromium` | Playwright browser (`chromium`, `firefox`, `webkit`) |
+| `CHROME_CHANNEL` | *(empty)* | Use system Chrome in CI (`chrome`); local default uses Playwright Chromium |
 | `HEADLESS` | `True` | Run browser headless when `True` |
 
 ## Troubleshooting
 
 - **Connection refused** — ensure `npm run dev` is running on `BASE_URL`.
 - **Contact success test fails** — API must respond; run Newman against `/api/contact` if needed.
-- **Slow first test** — Browser library downloads browsers on first `rfbrowser init`.
+- **Slow first local run** — `rfbrowser init chromium` downloads Playwright Chromium once (~165 MB); CI skips this.
 
-## CI (manual)
+## CI
 
-Robot UI tests run on **ubuntu-latest** with a cached Chromium install. The first manual run downloads the browser once (~5 min); later runs reuse the cache (~2 min setup).
-
-**Actions → Robot UI Tests → Run workflow**
-
-**Actions → Robot UI Tests → Run workflow**
-
-Workflow: [`.github/workflows/robot-tests.yml`](../../.github/workflows/robot-tests.yml) — uploads HTML reports as artifacts.
+Robot UI tests run in [`.github/workflows/qa-tests.yml`](../../.github/workflows/qa-tests.yml) after Newman API tests. GitHub Actions installs Chrome with `browser-actions/setup-chrome` and passes `CHROME_CHANNEL=chrome` — no `rfbrowser init` Chromium download (~7–8 min total job time).
