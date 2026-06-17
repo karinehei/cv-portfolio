@@ -14,7 +14,8 @@ on:
 
 concurrency:
   group: qa-tests-${{ github.ref }}
-  cancel-in-progress: true
+  # Robot job downloads Chromium (~165 MB); do not cancel mid-run when pushing again.
+  cancel-in-progress: false
 
 jobs:
   static-and-api:
@@ -65,9 +66,10 @@ jobs:
   robot-ui:
     name: Robot UI tests
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     env:
       GITHUB_PAGES: ""
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.playwright-browsers
 
     steps:
       - name: Checkout repository
@@ -95,8 +97,10 @@ jobs:
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:
-          path: ~/.cache/ms-playwright
+          path: .playwright-browsers
           key: playwright-${{ runner.os }}-${{ hashFiles('tests/robot/requirements.txt') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
 
       - name: Install Robot Framework dependencies
         run: |
