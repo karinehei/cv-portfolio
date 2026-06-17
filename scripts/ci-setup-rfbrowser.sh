@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fast Robot Browser setup for CI (Playwright Docker image).
+# Robot Browser setup for CI (ubuntu-latest + optional browser cache).
 # Skips Chromium download when PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1.
 # Local dev: pip install -r tests/robot/requirements.txt && rfbrowser init chromium
 set -euo pipefail
@@ -20,16 +20,16 @@ else
   npm install --omit=dev
 fi
 
+export PLAYWRIGHT_BROWSERS_PATH="${PLAYWRIGHT_BROWSERS_PATH:-$GITHUB_WORKSPACE/.playwright-browsers}"
+
 if [[ "${PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD:-}" == "1" ]]; then
-  log "Skipping Chromium download (using PLAYWRIGHT_BROWSERS_PATH=${PLAYWRIGHT_BROWSERS_PATH:-unset})."
-  if [[ -n "${PLAYWRIGHT_BROWSERS_PATH:-}" && -d "$PLAYWRIGHT_BROWSERS_PATH" ]]; then
-    ls -la "$PLAYWRIGHT_BROWSERS_PATH" | head -8
-  else
-    log "WARNING: PLAYWRIGHT_BROWSERS_PATH not found — tests may fail."
-  fi
+  log "Cache hit — skipping Chromium download."
+  ls -la "$PLAYWRIGHT_BROWSERS_PATH" | head -8
 else
-  log "Downloading Chromium (local / non-container CI)..."
+  log "Cache miss — downloading Chromium to $PLAYWRIGHT_BROWSERS_PATH (one-time, ~5 min)..."
+  mkdir -p "$PLAYWRIGHT_BROWSERS_PATH"
   npx --yes playwright install chromium
+  log "Chromium download and extract complete."
 fi
 
 log "Robot Browser setup complete."

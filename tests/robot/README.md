@@ -107,7 +107,7 @@ Defined in `resources/common.robot`:
 
 ## CI (manual)
 
-Robot UI tests use the [Playwright Docker image](https://playwright.dev/docs/docker) in CI (Chromium pre-installed — no 165 MB download). Run manually:
+Robot UI tests run on **ubuntu-latest** with a cached Chromium install. The first manual run downloads the browser once (~5 min); later runs reuse the cache (~2 min setup).
 
 **Actions → Robot UI Tests → Run workflow**
 

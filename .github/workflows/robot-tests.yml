@@ -1,10 +1,9 @@
 # Robot Framework UI smoke tests — manual only.
 #
-# Uses Playwright Docker (Chromium pre-installed). Does NOT run `rfbrowser init`
-# (that command always downloads Chromium). See scripts/ci-setup-rfbrowser.sh.
+# ubuntu-latest + cached Chromium (no Docker container — avoids exit code 16).
+# First run downloads Chromium once (~5 min); later runs reuse cache (~2 min setup).
 #
 # Run: Actions → Robot UI Tests → Run workflow
-# Expected total time: ~8–12 min (no 165 MB browser download).
 
 name: Robot UI Tests
 
@@ -19,23 +18,15 @@ jobs:
   robot-ui:
     name: Robot UI tests
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-    container:
-      image: mcr.microsoft.com/playwright:v1.49.1-noble
+    timeout-minutes: 30
     env:
       GITHUB_PAGES: ""
-      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
-      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.playwright-browsers
       UV_SYSTEM_PYTHON: 1
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Verify Playwright image (Chromium pre-installed)
-        run: |
-          echo "Using Playwright Docker — no Chromium download in later steps."
-          ls -la /ms-playwright | head -6
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -60,7 +51,18 @@ jobs:
           enable-cache: true
           cache-dependency-glob: tests/robot/requirements.txt
 
-      - name: Setup Robot Browser (fast — no Chromium download)
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: .playwright-browsers
+          key: playwright-${{ runner.os }}-${{ hashFiles('tests/robot/requirements.txt') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+
+      - name: Setup Robot Browser
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: ${{ steps.playwright-cache.outputs.cache-hit == 'true' && '1' || '' }}
         run: bash scripts/ci-setup-rfbrowser.sh
 
       - name: Run Robot Framework UI tests
