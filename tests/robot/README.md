@@ -107,7 +107,9 @@ Defined in `resources/common.robot`:
 
 ## CI (manual)
 
-Robot UI tests are **not** run on every push (Chromium setup is slow on GitHub-hosted runners). Run them manually:
+Robot UI tests use the [Playwright Docker image](https://playwright.dev/docs/docker) in CI (Chromium pre-installed — no 165 MB download). Run manually:
+
+**Actions → Robot UI Tests → Run workflow**
 
 **Actions → Robot UI Tests → Run workflow**
 

@@ -1,8 +1,9 @@
-# Robot Framework UI smoke tests — manual only (Chromium install is slow on GitHub-hosted runners).
+# Robot Framework UI smoke tests — manual only.
+#
+# Uses the official Playwright Docker image (Chromium pre-installed).
+# Avoids the 165 MB download and silent post-download extraction on GitHub runners.
 #
 # Run: Actions → Robot UI Tests → Run workflow
-# Do not push/cancel while this runs — the job must finish once so the browser cache is saved.
-# Local: see tests/robot/README.md
 
 name: Robot UI Tests
 
@@ -17,11 +18,13 @@ jobs:
   robot-ui:
     name: Robot UI tests
     runs-on: ubuntu-latest
-    # First run can exceed 20 min (pip + 165 MB Chromium). Cache only saves after a successful job.
-    timeout-minutes: 45
+    timeout-minutes: 25
+    container:
+      image: mcr.microsoft.com/playwright:v1.49.1-noble
     env:
       GITHUB_PAGES: ""
-      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.playwright-browsers
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
       UV_SYSTEM_PYTHON: 1
 
     steps:
@@ -51,26 +54,12 @@ jobs:
           enable-cache: true
           cache-dependency-glob: tests/robot/requirements.txt
 
-      - name: Cache Playwright browsers
-        id: playwright-cache
-        uses: actions/cache@v4
-        with:
-          path: .playwright-browsers
-          key: playwright-${{ runner.os }}-${{ hashFiles('tests/robot/requirements.txt') }}
-          restore-keys: |
-            playwright-${{ runner.os }}-
-
-      - name: Install Robot Python packages
-        run: uv pip install --system -r tests/robot/requirements.txt
-
-      - name: Setup rfbrowser (browsers from cache)
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 rfbrowser init chromium
-
-      - name: Setup rfbrowser (download Chromium)
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        timeout-minutes: 15
-        run: rfbrowser init chromium
+      - name: Install Robot Framework dependencies
+        run: |
+          uv pip install --system -r tests/robot/requirements.txt
+          echo "Setting up rfbrowser (Chromium already in Playwright container)..."
+          rfbrowser init chromium
+          echo "rfbrowser init complete."
 
       - name: Run Robot Framework UI tests
         run: |
