@@ -63,17 +63,22 @@ jobs:
       - name: Verify static export (not README/Jekyll)
         run: |
           test -f out/.nojekyll || echo > out/.nojekyll
-          if [ ! -f "out/${{ github.event.repository.name }}/index.html" ]; then
-            echo "::error::Missing out/${{ github.event.repository.name }}/index.html — static export failed."
+          REPO="${{ github.event.repository.name }}"
+          if [ -f "out/${REPO}/index.html" ]; then
+            INDEX="out/${REPO}/index.html"
+          elif [ -f "out/index.html" ]; then
+            INDEX="out/index.html"
+          else
+            echo "::error::No index.html found in out/ or out/${REPO}/"
             find out -maxdepth 3 -type f | head -30
             exit 1
           fi
-          if ! grep -q 'data-testid="hero-title"' "out/${{ github.event.repository.name }}/index.html"; then
+          if ! grep -q 'data-testid="hero-title"' "$INDEX"; then
             echo "::error::Built index.html is not the Next.js portfolio (expected hero section)."
-            head -20 "out/${{ github.event.repository.name }}/index.html"
+            head -20 "$INDEX"
             exit 1
           fi
-          echo "Static export OK: Next.js portfolio at out/${{ github.event.repository.name }}/"
+          echo "Static export OK: $INDEX"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
