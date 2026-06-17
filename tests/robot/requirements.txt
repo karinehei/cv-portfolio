@@ -1,4 +1,5 @@
 # Robot Framework UI test dependencies (CI and local runs).
-# Install: pip install -r tests/robot/requirements.txt && rfbrowser init
-robotframework>=7.0,<8.0
-robotframework-browser>=18.0,<19.0
+# Pinned for reproducible, fast pip installs on GitHub Actions.
+# Install: pip install -r tests/robot/requirements.txt && rfbrowser init chromium
+robotframework==7.2.2
+robotframework-browser==18.9.1

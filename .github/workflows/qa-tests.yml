@@ -1,11 +1,8 @@
 # QA pipeline for the CV portfolio project.
 # Demonstrates continuous testing: static checks, build, API (Newman), UI (Robot Framework).
 #
-# Configuration notes:
-# - Requires Node.js 20 and Python 3.12 on ubuntu-latest.
-# - Robot Browser downloads Chromium on first run (~2–3 min). Cache pip if runs are slow.
-# - If Robot fails with missing OS libraries, uncomment the Playwright deps step below.
-# - Replace karinehei in README badge after pushing to GitHub.
+# Robot + rfbrowser init can take several minutes on a cold runner; browsers are cached
+# between runs. Static/API and Robot jobs run in parallel to keep feedback fast.
 
 name: QA Tests
 
@@ -20,12 +17,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  qa-tests:
-    name: Lint · Build · API · Robot UI
+  static-and-api:
+    name: Lint · Build · API
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    # Newman/Robot need a Node server with API routes — not static GitHub Pages export.
-    # Override repository variables so `next build` never uses output: "export" here.
+    timeout-minutes: 15
     env:
       GITHUB_PAGES: ""
 
@@ -33,7 +28,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # --- Node.js: install, lint, typecheck, build ---
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -49,48 +43,72 @@ jobs:
       - name: Run TypeScript check
         run: npm run typecheck
 
-      # Use `npm run build` — NOT `build:pages` (static export removes /api/contact).
       - name: Production build
         run: npm run build
 
-      # --- Python: Robot Framework + Browser library ---
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-
-      - name: Install Robot Framework dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r tests/robot/requirements.txt
-          rfbrowser init
-
-      # Uncomment if Robot fails with "Host system is missing dependencies" on Ubuntu:
-      # - name: Install Playwright OS dependencies
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y libgbm1 libnss3 libatk-bridge2.0-0 libdrm2 \
-      #       libxkbcommon0 libasound2t64 libxcomposite1 libxdamage1 libxfixes3
-
-      # Server + tests must run in ONE step — background processes are killed when a step ends.
-      - name: Run API and UI tests
+      - name: Run Newman API tests
         run: |
           npm run start > /tmp/app-server.log 2>&1 &
           npx --yes wait-on http-get://127.0.0.1:3000 --timeout 120000
-          echo "Verifying POST /api/contact is available..."
           api_status=$(curl -s -o /tmp/api-preflight.json -w "%{http_code}" -X POST http://127.0.0.1:3000/api/contact \
             -H "Content-Type: application/json" \
             -d '{"name":"CI","email":"ci@example.com","message":"API readiness check message."}')
           if [ "$api_status" != "200" ]; then
-            echo "Contact API preflight failed (HTTP ${api_status}). Response:"
+            echo "Contact API preflight failed (HTTP ${api_status})."
             cat /tmp/api-preflight.json || true
-            echo "Server log:"
             cat /tmp/app-server.log || true
             exit 1
           fi
           npx --yes newman run tests/postman/contact-api.postman_collection.json \
             --env-var "baseUrl=http://127.0.0.1:3000"
+
+  robot-ui:
+    name: Robot UI tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GITHUB_PAGES: ""
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Production build
+        run: npm run build
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tests/robot/requirements.txt
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('tests/robot/requirements.txt') }}
+
+      - name: Install Robot Framework dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --prefer-binary -r tests/robot/requirements.txt
+          # Chromium only (~150 MB). Cached browsers make repeat runs much faster.
+          rfbrowser init chromium
+
+      - name: Run Robot Framework UI tests
+        run: |
+          npm run start > /tmp/app-server.log 2>&1 &
+          npx --yes wait-on http-get://127.0.0.1:3000 --timeout 120000
           mkdir -p tests/robot/results
           robot \
             --variable BASE_URL:http://127.0.0.1:3000 \
@@ -109,11 +127,3 @@ jobs:
             tests/robot/results/report.html
           retention-days: 14
           if-no-files-found: warn
-
-      # Optional: upload Newman HTML report if you add --reporters cli,htmlextra later
-      # - name: Upload API test reports
-      #   if: failure()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: newman-reports
-      #     path: newman/
