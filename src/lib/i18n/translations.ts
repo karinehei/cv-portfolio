@@ -221,8 +221,6 @@ const en: SiteTranslations = {
     title: "CV",
     subtitle:
       "Download my curriculum vitae or connect on LinkedIn. Replace public/cv.pdf with your own file.",
-    cardText:
-      "PDF CV tailored for software tester and QA engineer applications in Finland.",
     download: "Download CV (PDF)",
     linkedin: "LinkedIn profile",
     linkedinAria: "View LinkedIn profile (opens in new tab)",
@@ -485,8 +483,6 @@ const fi: SiteTranslations = {
     title: "CV",
     subtitle:
       "Lataa ansioluetteloni tai ota yhteyttä LinkedInissä. Korvaa public/cv.pdf omalla tiedostollasi.",
-    cardText:
-      "PDF-CV ohjelmistotestaajan ja QA-asiantuntijan työhakuihin Suomessa.",
     download: "Lataa CV (PDF)",
     linkedin: "LinkedIn-profiili",
     linkedinAria: "Avaa LinkedIn-profiili (avautuu uuteen välilehteen)",

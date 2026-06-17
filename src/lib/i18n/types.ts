@@ -91,7 +91,6 @@ export interface SiteTranslations {
   cv: {
     title: string;
     subtitle: string;
-    cardText: string;
     download: string;
     linkedin: string;
     linkedinAria: string;
