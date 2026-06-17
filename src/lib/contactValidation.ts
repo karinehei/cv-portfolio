@@ -10,6 +10,8 @@ export const CONTACT_MESSAGES_EN: ContactMessages = {
   success: "Contact request received",
   networkError: "Network error. Please try again.",
   genericError: "Something went wrong. Please try again.",
+  staticHostingError:
+    "Message could not be sent — this static site cannot run the contact API (405). Use email or LinkedIn instead.",
   formErrorSummary: (count) =>
     `The form has ${count} error${count === 1 ? "" : "s"}. Please review the fields below.`,
 };
