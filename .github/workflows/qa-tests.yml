@@ -24,6 +24,10 @@ jobs:
     name: Lint · Build · API · Robot UI
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # Newman/Robot need a Node server with API routes — not static GitHub Pages export.
+    # Override repository variables so `next build` never uses output: "export" here.
+    env:
+      GITHUB_PAGES: ""
 
     steps:
       - name: Checkout repository
@@ -45,6 +49,7 @@ jobs:
       - name: Run TypeScript check
         run: npm run typecheck
 
+      # Use `npm run build` — NOT `build:pages` (static export removes /api/contact).
       - name: Production build
         run: npm run build
 
@@ -68,23 +73,27 @@ jobs:
       #     sudo apt-get install -y libgbm1 libnss3 libatk-bridge2.0-0 libdrm2 \
       #       libxkbcommon0 libasound2t64 libxcomposite1 libxdamage1 libxfixes3
 
-      # --- Start app (production server after build) ---
-      - name: Start application
-        run: npm run start &
-
-      - name: Wait for application
-        run: npx --yes wait-on http://localhost:3000 --timeout 120000
-
-      # --- API tests (Postman / Newman) ---
-      - name: Run Postman API tests
-        run: npx --yes newman run tests/postman/contact-api.postman_collection.json
-
-      # --- UI tests (Robot Framework) ---
-      - name: Run Robot Framework UI tests
+      # Server + tests must run in ONE step — background processes are killed when a step ends.
+      - name: Run API and UI tests
         run: |
+          npm run start > /tmp/app-server.log 2>&1 &
+          npx --yes wait-on http-get://127.0.0.1:3000 --timeout 120000
+          echo "Verifying POST /api/contact is available..."
+          api_status=$(curl -s -o /tmp/api-preflight.json -w "%{http_code}" -X POST http://127.0.0.1:3000/api/contact \
+            -H "Content-Type: application/json" \
+            -d '{"name":"CI","email":"ci@example.com","message":"API readiness check message."}')
+          if [ "$api_status" != "200" ]; then
+            echo "Contact API preflight failed (HTTP ${api_status}). Response:"
+            cat /tmp/api-preflight.json || true
+            echo "Server log:"
+            cat /tmp/app-server.log || true
+            exit 1
+          fi
+          npx --yes newman run tests/postman/contact-api.postman_collection.json \
+            --env-var "baseUrl=http://127.0.0.1:3000"
           mkdir -p tests/robot/results
           robot \
-            --variable BASE_URL:http://localhost:3000 \
+            --variable BASE_URL:http://127.0.0.1:3000 \
             --variable HEADLESS:True \
             --outputdir tests/robot/results \
             tests/robot

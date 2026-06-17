@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "description": "Personal CV portfolio website — presented as a tested product for QA roles",
+  "author": "Karine Heinonen",
+  "license": "MIT",
   "scripts": {
     "dev": "node ./node_modules/next/dist/bin/next dev",
     "build": "node ./node_modules/next/dist/bin/next build",

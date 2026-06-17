@@ -1,6 +1,7 @@
 # CV Portfolio QA Automation Project
 
 [![QA Tests](https://github.com/karinehei/cv-portfolio/actions/workflows/qa-tests.yml/badge.svg)](https://github.com/karinehei/cv-portfolio/actions/workflows/qa-tests.yml)
+[![Licence: MIT](https://img.shields.io/badge/Licence-MIT-blue.svg)](LICENSE)
 
 A personal CV portfolio website built and maintained as a **tested product**. This repository demonstrates end-to-end quality assurance — from test planning and manual test cases to UI and API automation, accessibility evaluation, load testing, and continuous integration.
 
@@ -451,4 +452,4 @@ If the page loads but styles or scripts are missing:
 
 ## Licence
 
-Private portfolio project — add a licence if you plan to open-source.
+Copyright © 2026 [Karine Heinonen](https://github.com/karinehei). Released under the [MIT Licence](LICENSE).
