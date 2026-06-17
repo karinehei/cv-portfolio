@@ -1,9 +1,10 @@
 # Robot Framework UI smoke tests — manual only.
 #
-# Uses the official Playwright Docker image (Chromium pre-installed).
-# Avoids the 165 MB download and silent post-download extraction on GitHub runners.
+# Uses Playwright Docker (Chromium pre-installed). Does NOT run `rfbrowser init`
+# (that command always downloads Chromium). See scripts/ci-setup-rfbrowser.sh.
 #
 # Run: Actions → Robot UI Tests → Run workflow
+# Expected total time: ~8–12 min (no 165 MB browser download).
 
 name: Robot UI Tests
 
@@ -31,6 +32,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Verify Playwright image (Chromium pre-installed)
+        run: |
+          echo "Using Playwright Docker — no Chromium download in later steps."
+          ls -la /ms-playwright | head -6
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -54,12 +60,8 @@ jobs:
           enable-cache: true
           cache-dependency-glob: tests/robot/requirements.txt
 
-      - name: Install Robot Framework dependencies
-        run: |
-          uv pip install --system -r tests/robot/requirements.txt
-          echo "Setting up rfbrowser (Chromium already in Playwright container)..."
-          rfbrowser init chromium
-          echo "rfbrowser init complete."
+      - name: Setup Robot Browser (fast — no Chromium download)
+        run: bash scripts/ci-setup-rfbrowser.sh
 
       - name: Run Robot Framework UI tests
         run: |
