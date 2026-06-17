@@ -27,7 +27,7 @@ export function CvDownload() {
               {t.cv.download}
             </a>
             <a
-              href="https://www.linkedin.com"
+              href="https://www.linkedin.com/in/karine-heinonen-07b509128/"
               className="btn btn-secondary"
               target="_blank"
               rel="noopener noreferrer"

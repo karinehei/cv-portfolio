@@ -1,8 +1,8 @@
 # QA pipeline for the CV portfolio project.
 # Demonstrates continuous testing: static checks, build, API (Newman), UI (Robot Framework).
 #
-# Robot + rfbrowser init can take several minutes on a cold runner; browsers are cached
-# between runs. Static/API and Robot jobs run in parallel to keep feedback fast.
+# Fast path: PRs run lint + build + Newman only (~5 min).
+# Robot UI runs on push to main/master and manual workflow_dispatch (~8–12 min cold, faster with caches).
 
 name: QA Tests
 
@@ -11,10 +11,10 @@ on:
     branches: [main, master, develop]
   pull_request:
     branches: [main, master, develop]
+  workflow_dispatch:
 
 concurrency:
   group: qa-tests-${{ github.ref }}
-  # Robot job downloads Chromium (~165 MB); do not cancel mid-run when pushing again.
   cancel-in-progress: false
 
 jobs:
@@ -65,11 +65,14 @@ jobs:
 
   robot-ui:
     name: Robot UI tests
+    # Skip on PRs and develop — Robot + Chromium is slow; runs on main/master push or manual trigger.
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     env:
       GITHUB_PAGES: ""
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.playwright-browsers
+      UV_SYSTEM_PYTHON: 1
 
     steps:
       - name: Checkout repository
@@ -91,8 +94,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: pip
-          cache-dependency-path: tests/robot/requirements.txt
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: tests/robot/requirements.txt
 
       - name: Cache Playwright browsers
         uses: actions/cache@v4
@@ -104,9 +111,7 @@ jobs:
 
       - name: Install Robot Framework dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install --prefer-binary -r tests/robot/requirements.txt
-          # Chromium only (~150 MB). Cached browsers make repeat runs much faster.
+          uv pip install --system -r tests/robot/requirements.txt
           rfbrowser init chromium
 
       - name: Run Robot Framework UI tests
