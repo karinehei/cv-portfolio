@@ -221,6 +221,9 @@ const en: SiteTranslations = {
     title: "Contact",
     subtitle:
       "Interested in a software tester or QA role? Send a message below. All fields are required; the form is validated in the browser and on the server — see the Postman collection in tests/postman/ for API test coverage.",
+    staticNotice:
+      "This site is hosted on GitHub Pages (static files only). The contact API does not run here — use the email link below or connect on LinkedIn. Client-side validation still works; full API tests run in CI.",
+    emailFallback: "Send email instead",
     nameLabel: "Name",
     emailLabel: "Email",
     messageLabel: "Message",
@@ -239,6 +242,8 @@ const en: SiteTranslations = {
       success: "Contact request received",
       networkError: "Network error. Please try again.",
       genericError: "Something went wrong. Please try again.",
+      staticHostingError:
+        "Message could not be sent — this static site cannot run the contact API (405). Use the email link above or LinkedIn instead.",
       formErrorSummary: (count) =>
         `The form has ${count} error${count === 1 ? "" : "s"}. Please review the fields below.`,
     },
@@ -470,6 +475,9 @@ const fi: SiteTranslations = {
     title: "Yhteystiedot",
     subtitle:
       "Kiinnostunut ohjelmistotestaajan tai QA-roolista? Lähetä viesti alla. Kaikki kentät ovat pakollisia; lomake validoidaan selaimessa ja palvelimella — API-testikattavuus on tests/postman/ -kansiossa.",
+    staticNotice:
+      "Sivusto on GitHub Pages -staattisessa hostauksessa. Yhteystieto-API ei toimi täällä — käytä sähköpostilinkkiä tai LinkedIniä. Selainvalidointi toimii; täydet API-testit ajetaan CI:ssä.",
+    emailFallback: "Lähetä sähköpostilla",
     nameLabel: "Nimi",
     emailLabel: "Sähköposti",
     messageLabel: "Viesti",
@@ -488,6 +496,8 @@ const fi: SiteTranslations = {
       success: "Yhteydenottopyyntö vastaanotettu",
       networkError: "Verkkovirhe. Yritä uudelleen.",
       genericError: "Jokin meni pieleen. Yritä uudelleen.",
+      staticHostingError:
+        "Viestiä ei voitu lähettää — staattinen sivusto ei voi ajaa yhteystieto-API:a (405). Käytä yllä olevaa sähköpostilinkkiä tai LinkedIniä.",
       formErrorSummary: (count) =>
         count === 1
           ? "Lomakkeessa on 1 virhe. Tarkista kentät alla."

@@ -16,6 +16,9 @@ const nextConfig = {
   },
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
+    NEXT_PUBLIC_CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
+    NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY:
+      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "",
   },
 };
 

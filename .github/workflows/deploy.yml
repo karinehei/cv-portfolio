@@ -12,6 +12,7 @@
 #   3. Save, then re-run this workflow
 #
 # Note: API routes (POST /api/contact) are excluded from the static build.
+# Live contact form uses Web3Forms — set secret WEB3FORMS_ACCESS_KEY.
 # Newman/Robot API tests still run in qa-tests.yml against a Node server.
 
 name: Deploy to GitHub Pages
@@ -57,6 +58,22 @@ jobs:
         run: npm run build:pages
         env:
           GITHUB_PAGES_REPO: ${{ github.event.repository.name }}
+          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
+
+      - name: Verify static export (not README/Jekyll)
+        run: |
+          test -f out/.nojekyll || echo > out/.nojekyll
+          if [ ! -f "out/${{ github.event.repository.name }}/index.html" ]; then
+            echo "::error::Missing out/${{ github.event.repository.name }}/index.html — static export failed."
+            find out -maxdepth 3 -type f | head -30
+            exit 1
+          fi
+          if ! grep -q 'data-testid="hero-title"' "out/${{ github.event.repository.name }}/index.html"; then
+            echo "::error::Built index.html is not the Next.js portfolio (expected hero section)."
+            head -20 "out/${{ github.event.repository.name }}/index.html"
+            exit 1
+          fi
+          echo "Static export OK: Next.js portfolio at out/${{ github.event.repository.name }}/"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

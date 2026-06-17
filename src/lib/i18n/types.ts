@@ -12,6 +12,7 @@ export interface ContactMessages {
   success: string;
   networkError: string;
   genericError: string;
+  staticHostingError: string;
   formErrorSummary: (count: number) => string;
 }
 
@@ -95,6 +96,8 @@ export interface SiteTranslations {
   contact: {
     title: string;
     subtitle: string;
+    staticNotice: string;
+    emailFallback: string;
     nameLabel: string;
     emailLabel: string;
     messageLabel: string;

@@ -4,6 +4,8 @@ import { FormEvent, useEffect, useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
 import { translateApiMessage } from "@/lib/i18n";
 import { withBasePath } from "@/lib/paths";
+import { buildMailtoUrl } from "@/lib/staticHosting";
+import { hasWeb3Forms, submitWeb3Forms } from "@/lib/web3forms";
 import {
   hasFieldErrors,
   validateContactFields,
@@ -35,6 +37,7 @@ function describedByForField(
 export function ContactForm() {
   const { locale, t } = useLanguage();
   const messages = t.contact.messages;
+  const useWeb3Forms = hasWeb3Forms();
 
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -44,6 +47,7 @@ export function ContactForm() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<FormStatus>("idle");
   const [serverMessage, setServerMessage] = useState("");
+  const [mailtoHref, setMailtoHref] = useState<string | undefined>();
 
   const isSubmitting = status === "loading";
   const errorCount = Object.keys(errors).length;
@@ -61,6 +65,7 @@ export function ContactForm() {
     e.preventDefault();
     setErrors({});
     setServerMessage("");
+    setMailtoHref(undefined);
     setStatus("idle");
 
     const clientErrors = validateContactFields(form, messages);
@@ -71,16 +76,47 @@ export function ContactForm() {
 
     setStatus("loading");
 
+    const payload = {
+      name: form.name.trim(),
+      email: form.email.trim(),
+      message: form.message.trim(),
+    };
+
     try {
+      if (useWeb3Forms) {
+        const result = await submitWeb3Forms(payload);
+        if (!result.success) {
+          setServerMessage(result.message ?? messages.genericError);
+          setStatus("error");
+          return;
+        }
+
+        setServerMessage(messages.success);
+        setForm({ name: "", email: "", message: "" });
+        setStatus("success");
+        return;
+      }
+
       const res = await fetch(withBasePath("/api/contact"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          email: form.email.trim(),
-          message: form.message.trim(),
-        }),
+        body: JSON.stringify(payload),
       });
+
+      const contentType = res.headers.get("content-type") ?? "";
+      const isJson = contentType.includes("application/json");
+
+      if (!isJson) {
+        const mailto = buildMailtoUrl(
+          payload.name,
+          payload.email,
+          payload.message
+        );
+        setMailtoHref(mailto);
+        setServerMessage(messages.staticHostingError);
+        setStatus("error");
+        return;
+      }
 
       const data = (await res.json()) as {
         success?: boolean;
@@ -121,6 +157,18 @@ export function ContactForm() {
       aria-labelledby="contact-heading"
       aria-busy={isSubmitting}
     >
+      {/* Honeypot for Web3Forms spam protection */}
+      <input
+        type="checkbox"
+        name="botcheck"
+        tabIndex={-1}
+        autoComplete="off"
+        className="sr-only"
+        aria-hidden="true"
+        defaultChecked={false}
+        style={{ display: "none" }}
+      />
+
       <div
         id="contact-form-announcer"
         aria-live="polite"
@@ -253,6 +301,14 @@ export function ContactForm() {
       {status === "error" && serverMessage && (
         <p className="form-error" role="alert" data-testid="contact-error">
           {serverMessage}
+          {mailtoHref && (
+            <>
+              {" "}
+              <a href={mailtoHref} className="form-inline-link">
+                {t.contact.emailFallback}
+              </a>
+            </>
+          )}
         </p>
       )}
     </form>

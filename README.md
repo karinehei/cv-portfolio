@@ -398,6 +398,24 @@ GITHUB_PAGES_REPO=cv-portfolio npm run build:pages
 
 If deploy fails with **`Failed to create deployment (status: 404)`**, Pages is almost always still set to “Deploy from a branch” or Pages has never been enabled — repeat step 3.
 
+### Site shows README text instead of the portfolio?
+
+If `https://karinehei.github.io/cv-portfolio/` looks like this README (markdown headings, “Improve this page” footer, no styled hero section), **GitHub Pages is publishing the repository branch with Jekyll**, not the Next.js build from Actions.
+
+| What you see | Cause |
+|--------------|--------|
+| README content as a plain documentation page | **Source: Deploy from a branch** (Jekyll renders `README.md`) |
+| Styled portfolio (hero, nav, EN/FI toggle) | **Source: GitHub Actions** (deploy workflow uploads `out/`) |
+
+**Fix:**
+
+1. Open [Settings → Pages](https://github.com/karinehei/cv-portfolio/settings/pages).
+2. **Build and deployment → Source → GitHub Actions** (not “Deploy from a branch”).
+3. **Actions → Deploy to GitHub Pages → Run workflow** (re-run all jobs).
+4. Wait 1–2 minutes, then hard-refresh the site (Ctrl+Shift+R).
+
+The deploy workflow only updates the live URL when Pages source is **GitHub Actions**. A successful workflow run does nothing visible if the source is still set to a branch.
+
 ### How deployment works
 
 | Step | What happens |
@@ -416,9 +434,34 @@ npx serve out
 # Open http://localhost:<port>/cv-portfolio/  (match GITHUB_PAGES_REPO / repo name)
 ```
 
+### Contact form on GitHub Pages (Web3Forms)
+
+GitHub Pages cannot run Next.js API routes. The live site uses **[Web3Forms](https://web3forms.com)** to deliver contact messages to your inbox.
+
+**One-time setup:**
+
+1. Create a form at [app.web3forms.com](https://app.web3forms.com) (you already have `karine.heinonen@hotmail.com`).
+2. **Form name:** e.g. `CV Portfolio Contact`
+3. **Domain:** `karinehei.github.io` (for local testing, add `localhost` in Web3Forms settings or use `localhost` during onboarding)
+4. Copy the **Access Key** from your email or dashboard.
+5. In GitHub: **Settings → Secrets and variables → Actions → New repository secret**
+   - Name: `WEB3FORMS_ACCESS_KEY`
+   - Value: your access key
+6. Re-run **Deploy to GitHub Pages**.
+
+**Local development:**
+
+```bash
+cp .env.example .env.local
+# Add your access key to NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
+npm run dev
+```
+
+When `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` is set, the form posts to Web3Forms. Without it, `npm run dev` / `npm run start` use the built-in `POST /api/contact` route (used by Newman in CI).
+
 ### Static hosting limitations
 
-GitHub Pages serves **static files only**. This affects:
+GitHub Pages serves **static files only**:
 
 | Feature | On GitHub Pages | Full Node deployment (`npm run start`) |
 |---------|-----------------|----------------------------------------|
@@ -426,11 +469,10 @@ GitHub Pages serves **static files only**. This affects:
 | EN / FI language toggle | Works | Works |
 | Theme toggle | Works | Works |
 | CV PDF download | Works | Works |
-| **`POST /api/contact`** | **Does not run** | Works |
+| **Contact form submit** | **Web3Forms** (with `WEB3FORMS_ACCESS_KEY`) | Built-in API or Web3Forms |
+| **`POST /api/contact`** | Not available | Works (CI / local without Web3Forms key) |
 
-The contact form **validates in the browser** on GitHub Pages, but **submitting the form will fail** because `src/app/api/contact` is removed during the static build (Next.js cannot export API routes). Client-side validation, Newman API tests, and Robot contact tests still run in [`.github/workflows/qa-tests.yml`](.github/workflows/qa-tests.yml) against a Node server — that is the authoritative test environment for the API.
-
-For a working contact form in production, deploy to Vercel, Netlify, or another Node-compatible host, or replace the form with a static-friendly service (e.g. Formspree).
+Newman API tests and Robot contact tests still run in [`.github/workflows/qa-tests.yml`](.github/workflows/qa-tests.yml) against the Node server and `/api/contact` — that remains the authoritative API test environment in CI.
 
 ### Troubleshooting broken CSS or assets
 
