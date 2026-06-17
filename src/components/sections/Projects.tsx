@@ -17,7 +17,19 @@ export function Projects() {
             <article key={project.id} className="card" data-testid="project-card">
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.75rem", flexWrap: "wrap" }}>
                 <h3 style={{ margin: 0, fontSize: "1.125rem", flex: "1 1 12rem" }}>
-                  {project.title}
+                  {project.href ? (
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-testid={`project-link-${project.id}`}
+                      aria-label={t.projects.viewRepoAria(project.title)}
+                    >
+                      {project.title}
+                    </a>
+                  ) : (
+                    project.title
+                  )}
                 </h3>
                 <span className="tag" aria-label={project.statusLabel}>
                   {project.statusLabel.replace(/^(Status|Tila): /, "")}

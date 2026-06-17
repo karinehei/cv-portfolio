@@ -35,6 +35,7 @@ export interface ProjectItem {
   tags: string[];
   status: string;
   statusLabel: string;
+  href?: string;
 }
 
 export interface QaArtefact {
@@ -83,6 +84,8 @@ export interface SiteTranslations {
   projects: {
     title: string;
     subtitle: string;
+    viewRepo: string;
+    viewRepoAria: (title: string) => string;
     items: ProjectItem[];
   };
   cv: {

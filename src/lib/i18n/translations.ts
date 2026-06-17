@@ -177,6 +177,8 @@ const en: SiteTranslations = {
     title: "Projects",
     subtitle:
       "Selected work demonstrating testing, automation, and software development — including academic and personal projects.",
+    viewRepo: "View repository",
+    viewRepoAria: (title) => `View ${title} on GitHub (opens in new tab)`,
     items: [
       {
         id: "cv-portfolio",
@@ -191,19 +193,27 @@ const en: SiteTranslations = {
         id: "rag-qdrant",
         title: "RAG / Qdrant — thesis project",
         description:
-          "Thesis work involving retrieval-augmented generation and vector search with Qdrant. Placeholder for test approach: API validation, data-quality checks, and evaluation of search relevance. Link and details to be added.",
-        tags: ["API testing", "Python", "Test documentation", "Thesis"],
-        status: "Placeholder",
-        statusLabel: "Status: Placeholder",
+          "Thesis research prototype: Qdrant-based RAG pipeline for evaluating retrieval ablations on a Finnish Theseus thesis corpus. Covers preprocessing, indexing, gold annotations, and experiments with recall@k, nDCG@k, and latency metrics (MMR, reranking, deduplication).",
+        tags: ["Qdrant", "RAG", "Python", "Thesis", "Evaluation"],
+        status: "Active",
+        statusLabel: "Status: Active",
+        href: "https://github.com/karinehei/qdrant_oppari",
       },
       {
-        id: "agentaudit",
-        title: "AgentAudit",
+        id: "public-transport-demo",
+        title: "Public transport test automation demo",
         description:
-          "Placeholder for an auditing or agent-evaluation project. Intended to showcase exploratory testing, structured bug reports, and collaboration with developers on AI-assisted tooling. Repository link to be added.",
-        tags: ["Exploratory testing", "Bug reporting", "Agile", "Automation"],
-        status: "Placeholder",
-        statusLabel: "Status: Placeholder",
+          "E2E test automation demo for an HSL-style ticketing system: FastAPI backend, React UI, and Robot Framework suites for API, UI (Selenium), and E2E flows. Includes GitHub Actions CI, Azure DevOps pipeline docs, test management artefacts, and a live Render deployment.",
+        tags: [
+          "Robot Framework",
+          "Exploratory testing",
+          "Bug reporting",
+          "Agile",
+          "Automation",
+        ],
+        status: "Active",
+        statusLabel: "Status: Active",
+        href: "https://github.com/karinehei/public-transport-test-automation-demo",
       },
     ],
   },
@@ -431,6 +441,8 @@ const fi: SiteTranslations = {
     title: "Projektit",
     subtitle:
       "Valittuja töitä, jotka osoittavat testausta, automaatiota ja ohjelmistokehitystä — mukaan lukien opinnäyte- ja omat projektit.",
+    viewRepo: "Näytä repositorio",
+    viewRepoAria: (title) => `Avaa ${title} GitHubissa (avautuu uuteen välilehteen)`,
     items: [
       {
         id: "cv-portfolio",
@@ -445,19 +457,27 @@ const fi: SiteTranslations = {
         id: "rag-qdrant",
         title: "RAG / Qdrant — opinnäyteprojekti",
         description:
-          "Opinnäytetyö, jossa hyödynnetään retrieval-augmented generationia ja vektorihakua Qdrantilla. Paikkamerkki testauslähestymiselle: API-varmistus, datan laatu ja hakutulosten arviointi. Linkki ja tiedot lisätään myöhemmin.",
-        tags: ["API-testaus", "Python", "Testidokumentaatio", "Opinnäyte"],
-        status: "Placeholder",
-        statusLabel: "Tila: Paikkamerkki",
+          "Opinnäytetyön tutkimusprototyyppi: Qdrant-pohjainen RAG-putki retrieval-ablaatioiden arviointiin suomenkielisellä Theseus-opinnäyteaineistolla. Sisältää preprocessoinnin, indeksoinnin, gold-annotaatiot ja kokeet (recall@k, nDCG@k, latenssi; MMR, reranking, deduplikointi).",
+        tags: ["Qdrant", "RAG", "Python", "Opinnäyte", "Arviointi"],
+        status: "Active",
+        statusLabel: "Tila: Aktiivinen",
+        href: "https://github.com/karinehei/qdrant_oppari",
       },
       {
-        id: "agentaudit",
-        title: "AgentAudit",
+        id: "public-transport-demo",
+        title: "Joukkoliikenteen testiautomaatio-demo",
         description:
-          "Paikkamerkki auditointi- tai agenttiarviointiprojektille. Tarkoitus esitellä tutkivaa testausta, strukturoituja virheraportteja ja yhteistyötä kehittäjien kanssa AI-avusteisissa työkaluissa. Repositoriolinkki lisätään myöhemmin.",
-        tags: ["Tutkiva testaus", "Virheraportointi", "Ketterä", "Automaatio"],
-        status: "Placeholder",
-        statusLabel: "Tila: Paikkamerkki",
+          "E2E-testiautomaatiodemo HSL-tyyliselle lippujärjestelmälle: FastAPI-backend, React-käyttöliittymä ja Robot Framework -testit API-, UI- (Selenium) ja E2E-tasoilla. Sisältää GitHub Actions -CI:n, Azure DevOps -putkidokumentaation, testinhallinta-artefaktit ja Render-julkaisun.",
+        tags: [
+          "Robot Framework",
+          "Tutkiva testaus",
+          "Virheraportointi",
+          "Ketterä",
+          "Automaatio",
+        ],
+        status: "Active",
+        statusLabel: "Tila: Aktiivinen",
+        href: "https://github.com/karinehei/public-transport-test-automation-demo",
       },
     ],
   },
