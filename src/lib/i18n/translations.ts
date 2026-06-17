@@ -220,7 +220,7 @@ const en: SiteTranslations = {
   cv: {
     title: "CV",
     subtitle:
-      "Download my curriculum vitae or connect on LinkedIn. Replace public/cv.pdf with your own file.",
+      "Download my curriculum vitae or connect on LinkedIn.",
     download: "Download CV (PDF)",
     linkedin: "LinkedIn profile",
     linkedinAria: "View LinkedIn profile (opens in new tab)",
@@ -228,7 +228,7 @@ const en: SiteTranslations = {
   contact: {
     title: "Contact",
     subtitle:
-      "Interested in a software tester or QA role? Send a message below. All fields are required; the form is validated in the browser and on the server — see the Postman collection in tests/postman/ for API test coverage.",
+      "Interested in a software tester or QA role? Send a message below. All fields are required. The form is validated in the browser and on the server — see the Postman collection in tests/postman/ for API test coverage.",
     staticNotice:
       "This site is hosted on GitHub Pages (static files only). The contact API does not run here — use the email link below or connect on LinkedIn. Client-side validation still works; full API tests run in CI.",
     emailFallback: "Send email instead",
@@ -482,7 +482,7 @@ const fi: SiteTranslations = {
   cv: {
     title: "CV",
     subtitle:
-      "Lataa ansioluetteloni tai ota yhteyttä LinkedInissä. Korvaa public/cv.pdf omalla tiedostollasi.",
+      "Lataa ansioluetteloni tai ota yhteyttä LinkedInissä.",
     download: "Lataa CV (PDF)",
     linkedin: "LinkedIn-profiili",
     linkedinAria: "Avaa LinkedIn-profiili (avautuu uuteen välilehteen)",
@@ -490,7 +490,7 @@ const fi: SiteTranslations = {
   contact: {
     title: "Yhteystiedot",
     subtitle:
-      "Kiinnostunut ohjelmistotestaajan tai QA-roolista? Lähetä viesti alla. Kaikki kentät ovat pakollisia; lomake validoidaan selaimessa ja palvelimella — API-testikattavuus on tests/postman/ -kansiossa.",
+      "Kiinnostunut ohjelmistotestaajan tai QA-roolista? Lähetä viesti alla. Kaikki kentät ovat pakollisia. Lomake validoidaan selaimessa ja palvelimella — API-testikattavuus on tests/postman/ -kansiossa.",
     staticNotice:
       "Sivusto on GitHub Pages -staattisessa hostauksessa. Yhteystieto-API ei toimi täällä — käytä sähköpostilinkkiä tai LinkedIniä. Selainvalidointi toimii; täydet API-testit ajetaan CI:ssä.",
     emailFallback: "Lähetä sähköpostilla",
