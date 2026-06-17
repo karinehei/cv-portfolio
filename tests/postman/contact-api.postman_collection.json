@@ -1,0 +1,358 @@
+{
+  "info": {
+    "name": "CV Portfolio — Contact API",
+    "_postman_id": "contact-api-collection",
+    "description": "API tests for POST /api/contact — demonstrates contract, validation, and negative testing for QA roles.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Contact API",
+      "item": [
+        {
+          "name": "1. Valid contact request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response is JSON with success and message fields', function () {",
+                  "    pm.response.to.be.json;",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.be.an('object');",
+                  "    pm.expect(json).to.have.all.keys('success', 'message');",
+                  "    pm.expect(json.message).to.be.a('string');",
+                  "});",
+                  "",
+                  "pm.test('success is true', function () {",
+                  "    pm.expect(pm.response.json().success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test('message exists and confirms receipt', function () {",
+                  "    const message = pm.response.json().message;",
+                  "    pm.expect(message).to.exist;",
+                  "    pm.expect(message.length).to.be.above(0);",
+                  "    pm.expect(message).to.eql('Contact request received');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"message\": \"This is a valid contact message for API testing.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/contact"
+          }
+        },
+        {
+          "name": "2. Missing name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Response is JSON with success and message fields', function () {",
+                  "    pm.response.to.be.json;",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.be.an('object');",
+                  "    pm.expect(json).to.have.all.keys('success', 'message');",
+                  "    pm.expect(json.message).to.be.a('string');",
+                  "});",
+                  "",
+                  "pm.test('success is false', function () {",
+                  "    pm.expect(pm.response.json().success).to.eql(false);",
+                  "});",
+                  "",
+                  "pm.test('message describes missing name', function () {",
+                  "    const message = pm.response.json().message;",
+                  "    pm.expect(message).to.exist;",
+                  "    pm.expect(message).to.eql('Name is required');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"email\": \"test@example.com\",\n  \"message\": \"This is a valid contact message for API testing.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/contact"
+          }
+        },
+        {
+          "name": "3. Missing email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Response is JSON with success and message fields', function () {",
+                  "    pm.response.to.be.json;",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.be.an('object');",
+                  "    pm.expect(json).to.have.all.keys('success', 'message');",
+                  "    pm.expect(json.message).to.be.a('string');",
+                  "});",
+                  "",
+                  "pm.test('success is false', function () {",
+                  "    pm.expect(pm.response.json().success).to.eql(false);",
+                  "});",
+                  "",
+                  "pm.test('message describes missing email', function () {",
+                  "    const message = pm.response.json().message;",
+                  "    pm.expect(message).to.exist;",
+                  "    pm.expect(message).to.eql('Email is required');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"\",\n  \"message\": \"This is a valid contact message for API testing.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/contact"
+          }
+        },
+        {
+          "name": "4. Invalid email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Response is JSON with success and message fields', function () {",
+                  "    pm.response.to.be.json;",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.be.an('object');",
+                  "    pm.expect(json).to.have.all.keys('success', 'message');",
+                  "    pm.expect(json.message).to.be.a('string');",
+                  "});",
+                  "",
+                  "pm.test('success is false', function () {",
+                  "    pm.expect(pm.response.json().success).to.eql(false);",
+                  "});",
+                  "",
+                  "pm.test('message describes invalid email', function () {",
+                  "    const message = pm.response.json().message;",
+                  "    pm.expect(message).to.exist;",
+                  "    pm.expect(message).to.eql('Invalid email address');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"not-an-email\",\n  \"message\": \"This is a valid contact message for API testing.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/contact"
+          }
+        },
+        {
+          "name": "5. Missing message",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Response is JSON with success and message fields', function () {",
+                  "    pm.response.to.be.json;",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.be.an('object');",
+                  "    pm.expect(json).to.have.all.keys('success', 'message');",
+                  "    pm.expect(json.message).to.be.a('string');",
+                  "});",
+                  "",
+                  "pm.test('success is false', function () {",
+                  "    pm.expect(pm.response.json().success).to.eql(false);",
+                  "});",
+                  "",
+                  "pm.test('message describes missing message', function () {",
+                  "    const message = pm.response.json().message;",
+                  "    pm.expect(message).to.exist;",
+                  "    pm.expect(message).to.eql('Message is required');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"message\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/api/contact"
+          }
+        },
+        {
+          "name": "6. Too short message",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Response is JSON with success and message fields', function () {",
+                  "    pm.response.to.be.json;",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.be.an('object');",
+                  "    pm.expect(json).to.have.all.keys('success', 'message');",
+                  "    pm.expect(json.message).to.be.a('string');",
+                  "});",
+                  "",
+                  "pm.test('success is false', function () {",
+                  "    pm.expect(pm.response.json().success).to.eql(false);",
+                  "});",
+                  "",
+                  "pm.test('message describes minimum length', function () {",
+                  "    const message = pm.response.json().message;",
+                  "    pm.expect(message).to.exist;",
+                  "    pm.expect(message).to.eql('Message must be at least 10 characters');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"message\": \"short\"\n}"
+            },
+            "url": "{{baseUrl}}/api/contact"
+          }
+        },
+        {
+          "name": "7. Invalid JSON body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Response is JSON with success and message fields', function () {",
+                  "    pm.response.to.be.json;",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.be.an('object');",
+                  "    pm.expect(json).to.have.all.keys('success', 'message');",
+                  "    pm.expect(json.message).to.be.a('string');",
+                  "});",
+                  "",
+                  "pm.test('success is false', function () {",
+                  "    pm.expect(pm.response.json().success).to.eql(false);",
+                  "});",
+                  "",
+                  "pm.test('message describes invalid body', function () {",
+                  "    const message = pm.response.json().message;",
+                  "    pm.expect(message).to.exist;",
+                  "    pm.expect(message).to.eql('Invalid request body');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Test User\", broken"
+            },
+            "url": "{{baseUrl}}/api/contact"
+          }
+        }
+      ]
+    }
+  ]
+}

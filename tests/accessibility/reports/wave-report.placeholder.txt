@@ -1,0 +1,16 @@
+WAVE Accessibility Report — Placeholder
+========================================
+
+Run the WAVE browser extension on http://localhost:3000 and paste or export
+summary findings here.
+
+Date: YYYY-MM-DD
+Tester: Your name
+Page: Home (all sections)
+
+Errors:   (fill after scan)
+Alerts:   (fill after scan)
+Features: (fill after scan)
+
+Notes:
+- 

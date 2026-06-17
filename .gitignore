@@ -1,0 +1,39 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build
+.next/
+out/
+build/
+dist/
+
+# testing & reports
+tests/accessibility/reports/*.html
+tests/accessibility/reports/*.json
+tests/jmeter/results/
+tests/robot/results/
+*.log
+
+# env
+.env
+.env*.local
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

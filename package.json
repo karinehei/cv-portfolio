@@ -1,0 +1,30 @@
+{
+  "name": "cv-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal CV portfolio website — presented as a tested product for QA roles",
+  "scripts": {
+    "dev": "node ./node_modules/next/dist/bin/next dev",
+    "build": "node ./node_modules/next/dist/bin/next build",
+    "build:pages": "node scripts/build-github-pages.mjs",
+    "start": "node ./node_modules/next/dist/bin/next start",
+    "lint": "node ./node_modules/next/dist/bin/next lint",
+    "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "dependencies": {
+    "next": "^14.2.29",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.50",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.29",
+    "typescript": "^5.8.3"
+  }
+}

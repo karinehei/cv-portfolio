@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.12.3 on linux)" generated="2026-06-17T11:25:08.508632" rpa="false" schemaversion="5">
+<suite id="s1" name="Robot" source="/mnt/c/Users/karin/Documents/työ/cv-portfolio/tests/robot">
+<suite id="s1-s1" name="Portfolio" source="/mnt/c/Users/karin/Documents/työ/cv-portfolio/tests/robot/portfolio.robot">
+<kw name="Suite Browser Setup" owner="common" type="SETUP">
+<kw name="New Browser" owner="Browser">
+<msg time="2026-06-17T11:25:08.687684" level="INFO">{"browser": "chromium", "headless": true, "chromiumSandbox": false, "devtools": false, "handleSIGHUP": true, "handleSIGINT": true, "handleSIGTERM": true, "slowMo": 0.0, "timeout": 30000.0, "tracesDir": "/mnt/c/Users/karin/Documents/ty\u00f6/cv-portfolio/browser/traces/temp/a21c82ca-4638-4505-af47-facd7df8fa3d"}</msg>
+<msg time="2026-06-17T11:25:08.693871" level="INFO">Starting Browser process /home/karine/robot-venv/lib/python3.12/site-packages/Browser/wrapper/index.js using at 127.0.0.1:48355</msg>
+<msg time="2026-06-17T11:25:09.097546" level="INFO">Successfully created browser with options: {"browser":"chromium","headless":true,"chromiumSandbox":false,"devtools":false,"handleSIGHUP":true,"handleSIGINT":true,"handleSIGTERM":true,"slowMo":0,"timeout":30000,"tracesDir":"/mnt/c/Users/karin/Documents/työ/cv-portfolio/browser/traces/temp/a21c82ca-4638-4505-af47-facd7df8fa3d"}</msg>
+<arg>${BROWSER}</arg>
+<arg>headless=${HEADLESS}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Create a new playwright Browser with specified options.</doc>
+<status status="PASS" start="2026-06-17T11:25:08.685569" elapsed="0.412151"/>
+</kw>
+<status status="PASS" start="2026-06-17T11:25:08.683789" elapsed="0.414064"/>
+</kw>
+<test id="s1-s1-t1" name="Home Page Loads Successfully" line="10">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:09.110586" level="INFO">${url} = http://localhost:3000</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.108073" elapsed="0.002543"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:09.489079" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000</msg>
+<msg time="2026-06-17T11:25:09.489166" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.110726" elapsed="0.378576"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:09.525568" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.489493" elapsed="0.036232"/>
+</kw>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.104236" elapsed="0.421598"/>
+</kw>
+<kw name="Get Title" owner="Browser">
+<msg time="2026-06-17T11:25:09.530673" level="INFO">Title: 'CV Portfolio | Software Tester &amp; QA Engineer'</msg>
+<arg>contains</arg>
+<arg>${EXPECTED_PAGE_TITLE}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.526007" elapsed="0.004748"/>
+</kw>
+<kw name="Element By Test Id Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:09.539554" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.532296" elapsed="0.007383"/>
+</kw>
+<arg>hero-title</arg>
+<doc>Assert an element with data-testid is visible.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.530969" elapsed="0.008803"/>
+</kw>
+<msg time="2026-06-17T11:25:09.552214" level="INFO">Switching context to context=6888ac12-c1e5-4048-b831-39477a0e7238 in CURRENT</msg>
+<msg time="2026-06-17T11:25:09.557146" level="INFO">Successfully changed active context: context=6888ac12-c1e5-4048-b831-39477a0e7238</msg>
+<msg time="2026-06-17T11:25:09.564209" level="INFO">Successfully closed Context</msg>
+<doc>TC-001: Home page opens and hero section is displayed.</doc>
+<tag>home</tag>
+<tag>p1</tag>
+<tag>portfolio</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<status status="PASS" start="2026-06-17T11:25:09.097935" elapsed="0.441988"/>
+</test>
+<test id="s1-s1-t2" name="Main Navigation Links Are Visible" line="17">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:09.574611" level="INFO">${url} = http://localhost:3000</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.571317" elapsed="0.003323"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:09.984716" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000</msg>
+<msg time="2026-06-17T11:25:09.984795" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.574751" elapsed="0.410169"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.008703" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.985092" elapsed="0.023761"/>
+</kw>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:09.569362" elapsed="0.439588"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2026-06-17T11:25:10.010467" level="INFO">@{links} = [ Home | About | Skills | QA Portfolio | Projects | CV | Contact ]</msg>
+<var>@{links}</var>
+<arg>Home</arg>
+<arg>About</arg>
+<arg>Skills</arg>
+<arg>QA Portfolio</arg>
+<arg>Projects</arg>
+<arg>CV</arg>
+<arg>Contact</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.009105" elapsed="0.001386"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Navigation Link Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.022768" level="INFO">Waited for Element with selector role=navigation[name="Main navigation"] &gt;&gt; role=link[name="Home"] at state visible</msg>
+<arg>role=navigation[name="Main navigation"] &gt;&gt; role=link[name="${link_name}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.014534" elapsed="0.008327"/>
+</kw>
+<arg>${link}</arg>
+<doc>Assert a main navigation link is visible by accessible name.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.013217" elapsed="0.009721"/>
+</kw>
+<var name="${link}">Home</var>
+<status status="PASS" start="2026-06-17T11:25:10.012156" elapsed="0.010812"/>
+</iter>
+<iter>
+<kw name="Navigation Link Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.033128" level="INFO">Waited for Element with selector role=navigation[name="Main navigation"] &gt;&gt; role=link[name="About"] at state visible</msg>
+<arg>role=navigation[name="Main navigation"] &gt;&gt; role=link[name="${link_name}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.025686" elapsed="0.007585"/>
+</kw>
+<arg>${link}</arg>
+<doc>Assert a main navigation link is visible by accessible name.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.024396" elapsed="0.008973"/>
+</kw>
+<var name="${link}">About</var>
+<status status="PASS" start="2026-06-17T11:25:10.023082" elapsed="0.010322"/>
+</iter>
+<iter>
+<kw name="Navigation Link Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.044685" level="INFO">Waited for Element with selector role=navigation[name="Main navigation"] &gt;&gt; role=link[name="Skills"] at state visible</msg>
+<arg>role=navigation[name="Main navigation"] &gt;&gt; role=link[name="${link_name}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.036408" elapsed="0.008431"/>
+</kw>
+<arg>${link}</arg>
+<doc>Assert a main navigation link is visible by accessible name.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.034979" elapsed="0.009965"/>
+</kw>
+<var name="${link}">Skills</var>
+<status status="PASS" start="2026-06-17T11:25:10.033542" elapsed="0.011435"/>
+</iter>
+<iter>
+<kw name="Navigation Link Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.055005" level="INFO">Waited for Element with selector role=navigation[name="Main navigation"] &gt;&gt; role=link[name="QA Portfolio"] at state visible</msg>
+<arg>role=navigation[name="Main navigation"] &gt;&gt; role=link[name="${link_name}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.048150" elapsed="0.006962"/>
+</kw>
+<arg>${link}</arg>
+<doc>Assert a main navigation link is visible by accessible name.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.046848" elapsed="0.008350"/>
+</kw>
+<var name="${link}">QA Portfolio</var>
+<status status="PASS" start="2026-06-17T11:25:10.045094" elapsed="0.010136"/>
+</iter>
+<iter>
+<kw name="Navigation Link Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.064268" level="INFO">Waited for Element with selector role=navigation[name="Main navigation"] &gt;&gt; role=link[name="Projects"] at state visible</msg>
+<arg>role=navigation[name="Main navigation"] &gt;&gt; role=link[name="${link_name}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.057514" elapsed="0.006863"/>
+</kw>
+<arg>${link}</arg>
+<doc>Assert a main navigation link is visible by accessible name.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.056378" elapsed="0.008084"/>
+</kw>
+<var name="${link}">Projects</var>
+<status status="PASS" start="2026-06-17T11:25:10.055331" elapsed="0.009163"/>
+</iter>
+<iter>
+<kw name="Navigation Link Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.073010" level="INFO">Waited for Element with selector role=navigation[name="Main navigation"] &gt;&gt; role=link[name="CV"] at state visible</msg>
+<arg>role=navigation[name="Main navigation"] &gt;&gt; role=link[name="${link_name}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.067029" elapsed="0.006091"/>
+</kw>
+<arg>${link}</arg>
+<doc>Assert a main navigation link is visible by accessible name.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.065651" elapsed="0.007546"/>
+</kw>
+<var name="${link}">CV</var>
+<status status="PASS" start="2026-06-17T11:25:10.064597" elapsed="0.008629"/>
+</iter>
+<iter>
+<kw name="Navigation Link Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.081391" level="INFO">Waited for Element with selector role=navigation[name="Main navigation"] &gt;&gt; role=link[name="Contact"] at state visible</msg>
+<arg>role=navigation[name="Main navigation"] &gt;&gt; role=link[name="${link_name}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.075770" elapsed="0.005698"/>
+</kw>
+<arg>${link}</arg>
+<doc>Assert a main navigation link is visible by accessible name.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.074417" elapsed="0.007119"/>
+</kw>
+<var name="${link}">Contact</var>
+<status status="PASS" start="2026-06-17T11:25:10.073310" elapsed="0.008254"/>
+</iter>
+<var>${link}</var>
+<value>@{links}</value>
+<status status="PASS" start="2026-06-17T11:25:10.010585" elapsed="0.071012"/>
+</for>
+<msg time="2026-06-17T11:25:10.089751" level="INFO">Switching context to context=2d4f226f-c8fa-4b2f-81cc-d295f3dfc786 in CURRENT</msg>
+<msg time="2026-06-17T11:25:10.094346" level="INFO">Successfully changed active context: context=2d4f226f-c8fa-4b2f-81cc-d295f3dfc786</msg>
+<msg time="2026-06-17T11:25:10.100323" level="INFO">Successfully closed Context</msg>
+<doc>TC-002: All primary navigation links are visible in the header.</doc>
+<tag>navigation</tag>
+<tag>p1</tag>
+<tag>portfolio</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<status status="PASS" start="2026-06-17T11:25:09.565240" elapsed="0.516494"/>
+</test>
+<test id="s1-s1-t3" name="Projects Section Is Visible" line="26">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:10.111315" level="INFO">${url} = http://localhost:3000/#projects</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.109005" elapsed="0.002335"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:10.455579" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000/#projects</msg>
+<msg time="2026-06-17T11:25:10.455659" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.111438" elapsed="0.344327"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.473538" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.455919" elapsed="0.017763"/>
+</kw>
+<arg>/#projects</arg>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.106780" elapsed="0.366994"/>
+</kw>
+<kw name="Section Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.481910" level="INFO">Waited for Element with selector css=#projects at state visible</msg>
+<arg>css=#${section_id}</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.475470" elapsed="0.006529"/>
+</kw>
+<arg>projects</arg>
+<doc>Assert a page section is present by HTML id.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.473962" elapsed="0.008431"/>
+</kw>
+<kw name="Section Heading Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.490110" level="INFO">Waited for Element with selector css=#projects-heading at state visible</msg>
+<arg>css=#${heading_id}</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.483906" elapsed="0.006274"/>
+</kw>
+<kw name="Get Text" owner="Browser">
+<msg time="2026-06-17T11:25:10.510661" level="INFO">Text: ['Projects']</msg>
+<arg>css=#${heading_id}</arg>
+<arg>contains</arg>
+<arg>${expected_text}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.490272" elapsed="0.020488"/>
+</kw>
+<arg>projects-heading</arg>
+<arg>Projects</arg>
+<doc>Assert a section heading is visible by its element id.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.482554" elapsed="0.028293"/>
+</kw>
+<msg time="2026-06-17T11:25:10.518477" level="INFO">Switching context to context=f2eda33e-f281-4516-a5f2-102ebd742b6c in CURRENT</msg>
+<msg time="2026-06-17T11:25:10.522355" level="INFO">Successfully changed active context: context=f2eda33e-f281-4516-a5f2-102ebd742b6c</msg>
+<msg time="2026-06-17T11:25:10.525562" level="INFO">Successfully closed Context</msg>
+<doc>TC-003: Projects section and at least one project card are visible.</doc>
+<tag>p1</tag>
+<tag>portfolio</tag>
+<tag>projects</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<status status="PASS" start="2026-06-17T11:25:10.100710" elapsed="0.410273"/>
+</test>
+<test id="s1-s1-t4" name="QA Testing Project Section Is Visible" line="34">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:10.532506" level="INFO">${url} = http://localhost:3000/#qa-testing</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.530698" elapsed="0.001832"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:10.834636" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000/#qa-testing</msg>
+<msg time="2026-06-17T11:25:10.834707" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.532624" elapsed="0.302187"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.859079" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.834961" elapsed="0.024267"/>
+</kw>
+<arg>/#qa-testing</arg>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.529094" elapsed="0.330229"/>
+</kw>
+<kw name="Section Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.867089" level="INFO">Waited for Element with selector css=#qa-testing at state visible</msg>
+<arg>css=#${section_id}</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.860852" elapsed="0.006338"/>
+</kw>
+<arg>qa-testing</arg>
+<doc>Assert a page section is present by HTML id.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.859511" elapsed="0.007753"/>
+</kw>
+<kw name="Section Heading Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:10.875569" level="INFO">Waited for Element with selector css=#qa-heading at state visible</msg>
+<arg>css=#${heading_id}</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.868698" elapsed="0.007010"/>
+</kw>
+<kw name="Get Text" owner="Browser">
+<msg time="2026-06-17T11:25:10.896706" level="INFO">Text: ['QA portfolio project']</msg>
+<arg>css=#${heading_id}</arg>
+<arg>contains</arg>
+<arg>${expected_text}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.875860" elapsed="0.020941"/>
+</kw>
+<arg>qa-heading</arg>
+<arg>QA portfolio project</arg>
+<doc>Assert a section heading is visible by its element id.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.867422" elapsed="0.029465"/>
+</kw>
+<msg time="2026-06-17T11:25:10.905539" level="INFO">Switching context to context=1cdd56a8-2d23-4b45-8fb4-52c3796d8e3a in CURRENT</msg>
+<msg time="2026-06-17T11:25:10.909886" level="INFO">Successfully changed active context: context=1cdd56a8-2d23-4b45-8fb4-52c3796d8e3a</msg>
+<msg time="2026-06-17T11:25:10.914473" level="INFO">Successfully closed Context</msg>
+<doc>TC-004: QA portfolio project section and artefacts are visible.</doc>
+<tag>p1</tag>
+<tag>portfolio</tag>
+<tag>qa</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<status status="PASS" start="2026-06-17T11:25:10.525846" elapsed="0.371169"/>
+</test>
+<test id="s1-s1-t5" name="Contact Form Shows Validation Errors When Submitted Empty" line="42">
+<kw name="Open Contact Section" owner="common">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:10.924156" level="INFO">${url} = http://localhost:3000/#contact</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.922424" elapsed="0.001754"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:11.237463" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000/#contact</msg>
+<msg time="2026-06-17T11:25:11.237535" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.924260" elapsed="0.313394"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:11.259829" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:11.237840" elapsed="0.022132"/>
+</kw>
+<arg>/#contact</arg>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.920194" elapsed="0.339866"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:11.271936" level="INFO">Waited for Element with selector css=[data-testid="contact-form"] at state visible</msg>
+<arg>css=[data-testid="contact-form"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:11.260167" elapsed="0.011929"/>
+</kw>
+<doc>Navigate directly to the contact form section.</doc>
+<status status="PASS" start="2026-06-17T11:25:10.918061" elapsed="0.354663"/>
+</kw>
+<kw name="Submit Contact Form" owner="common">
+<kw name="Click" owner="Browser">
+<msg time="2026-06-17T11:25:11.275929" level="INFO">Clicks the element 'css=[data-testid="contact-submit"]'.</msg>
+<arg>css=[data-testid="contact-submit"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:11.274581" elapsed="0.944064"/>
+</kw>
+<doc>Click the contact form submit button.</doc>
+<status status="PASS" start="2026-06-17T11:25:11.272928" elapsed="0.945890"/>
+</kw>
+<kw name="Text By Test Id Should Contain" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:12.233475" level="INFO">Waited for Element with selector css=[data-testid="contact-name-error"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.221541" elapsed="0.012132"/>
+</kw>
+<kw name="Get Text" owner="Browser">
+<msg time="2026-06-17T11:25:12.274642" level="INFO">Text: ['Name is required']</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>contains</arg>
+<arg>${expected_text}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.233906" elapsed="0.040873"/>
+</kw>
+<arg>contact-name-error</arg>
+<arg>Name is required</arg>
+<doc>Assert element text contains expected string.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.219111" elapsed="0.055789"/>
+</kw>
+<kw name="Text By Test Id Should Contain" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:12.285204" level="INFO">Waited for Element with selector css=[data-testid="contact-email-error"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.277003" elapsed="0.008357"/>
+</kw>
+<kw name="Get Text" owner="Browser">
+<msg time="2026-06-17T11:25:12.300387" level="INFO">Text: ['Email is required']</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>contains</arg>
+<arg>${expected_text}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.285539" elapsed="0.014973"/>
+</kw>
+<arg>contact-email-error</arg>
+<arg>Email is required</arg>
+<doc>Assert element text contains expected string.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.275160" elapsed="0.025474"/>
+</kw>
+<kw name="Text By Test Id Should Contain" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:12.312741" level="INFO">Waited for Element with selector css=[data-testid="contact-message-error"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.303927" elapsed="0.008960"/>
+</kw>
+<kw name="Get Text" owner="Browser">
+<msg time="2026-06-17T11:25:12.328433" level="INFO">Text: ['Message is required']</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>contains</arg>
+<arg>${expected_text}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.313077" elapsed="0.015492"/>
+</kw>
+<arg>contact-message-error</arg>
+<arg>Message is required</arg>
+<doc>Assert element text contains expected string.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.300902" elapsed="0.027796"/>
+</kw>
+<msg time="2026-06-17T11:25:12.340577" level="INFO">Switching context to context=cfe48c7b-c9b2-41a8-82d2-a6c39ef17920 in CURRENT</msg>
+<msg time="2026-06-17T11:25:12.346433" level="INFO">Successfully changed active context: context=cfe48c7b-c9b2-41a8-82d2-a6c39ef17920</msg>
+<msg time="2026-06-17T11:25:12.352552" level="INFO">Successfully closed Context</msg>
+<doc>TC-005: Empty submit triggers client-side validation on all required fields.</doc>
+<tag>contact</tag>
+<tag>p1</tag>
+<tag>portfolio</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<tag>validation</tag>
+<status status="PASS" start="2026-06-17T11:25:10.914779" elapsed="1.414107"/>
+</test>
+<test id="s1-s1-t6" name="Contact Form Rejects Invalid Email" line="51">
+<kw name="Open Contact Section" owner="common">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:12.367323" level="INFO">${url} = http://localhost:3000/#contact</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.364019" elapsed="0.003339"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:12.837163" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000/#contact</msg>
+<msg time="2026-06-17T11:25:12.837255" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.367504" elapsed="0.469885"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:12.867488" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.837588" elapsed="0.030078"/>
+</kw>
+<arg>/#contact</arg>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.361126" elapsed="0.506662"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:12.875577" level="INFO">Waited for Element with selector css=[data-testid="contact-form"] at state visible</msg>
+<arg>css=[data-testid="contact-form"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.867934" elapsed="0.007758"/>
+</kw>
+<doc>Navigate directly to the contact form section.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.357988" elapsed="0.517815"/>
+</kw>
+<kw name="Fill Contact Form" owner="common">
+<kw name="Fill Text" owner="Browser">
+<msg time="2026-06-17T11:25:12.880450" level="INFO">Fills the text 'Test User' in the given field.</msg>
+<arg>css=[data-testid="contact-name"]</arg>
+<arg>${name}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.877828" elapsed="0.020514"/>
+</kw>
+<kw name="Fill Text" owner="Browser">
+<msg time="2026-06-17T11:25:12.901803" level="INFO">Fills the text 'not-an-email' in the given field.</msg>
+<arg>css=[data-testid="contact-email"]</arg>
+<arg>${email}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.898578" elapsed="0.014263"/>
+</kw>
+<kw name="Fill Text" owner="Browser">
+<msg time="2026-06-17T11:25:12.915899" level="INFO">Fills the text 'This message has enough characters.' in the given field.</msg>
+<arg>css=[data-testid="contact-message"]</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.913437" elapsed="0.011227"/>
+</kw>
+<arg>Test User</arg>
+<arg>not-an-email</arg>
+<arg>This message has enough characters.</arg>
+<doc>Fill all contact form fields using stable data-testid selectors.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.876037" elapsed="0.048748"/>
+</kw>
+<kw name="Submit Contact Form" owner="common">
+<kw name="Click" owner="Browser">
+<msg time="2026-06-17T11:25:12.928731" level="INFO">Clicks the element 'css=[data-testid="contact-submit"]'.</msg>
+<arg>css=[data-testid="contact-submit"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.926852" elapsed="1.434011"/>
+</kw>
+<doc>Click the contact form submit button.</doc>
+<status status="PASS" start="2026-06-17T11:25:12.925013" elapsed="1.436031"/>
+</kw>
+<kw name="Text By Test Id Should Contain" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:14.374829" level="INFO">Waited for Element with selector css=[data-testid="contact-email-error"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.363720" elapsed="0.011310"/>
+</kw>
+<kw name="Get Text" owner="Browser">
+<msg time="2026-06-17T11:25:14.408203" level="INFO">Text: ['Invalid email address']</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>contains</arg>
+<arg>${expected_text}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.375246" elapsed="0.033105"/>
+</kw>
+<arg>contact-email-error</arg>
+<arg>Invalid email address</arg>
+<doc>Assert element text contains expected string.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.361332" elapsed="0.047153"/>
+</kw>
+<msg time="2026-06-17T11:25:14.422661" level="INFO">Switching context to context=977d9fe0-3ddc-4537-9ee7-200bdd1454c0 in CURRENT</msg>
+<msg time="2026-06-17T11:25:14.431829" level="INFO">Successfully changed active context: context=977d9fe0-3ddc-4537-9ee7-200bdd1454c0</msg>
+<msg time="2026-06-17T11:25:14.437814" level="INFO">Successfully closed Context</msg>
+<doc>TC-006: Invalid email format shows a clear validation message.</doc>
+<tag>contact</tag>
+<tag>p1</tag>
+<tag>portfolio</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<tag>validation</tag>
+<status status="PASS" start="2026-06-17T11:25:12.352982" elapsed="2.055699"/>
+</test>
+<test id="s1-s1-t7" name="Contact Form Accepts Valid Input And Shows Success Message" line="59">
+<kw name="Open Contact Section" owner="common">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:14.451010" level="INFO">${url} = http://localhost:3000/#contact</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.448187" elapsed="0.002861"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:14.879310" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000/#contact</msg>
+<msg time="2026-06-17T11:25:14.879388" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.451188" elapsed="0.428316"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:14.904984" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.879662" elapsed="0.025504"/>
+</kw>
+<arg>/#contact</arg>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.445413" elapsed="0.459875"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:14.915415" level="INFO">Waited for Element with selector css=[data-testid="contact-form"] at state visible</msg>
+<arg>css=[data-testid="contact-form"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.905420" elapsed="0.010125"/>
+</kw>
+<doc>Navigate directly to the contact form section.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.443353" elapsed="0.472283"/>
+</kw>
+<kw name="Fill Contact Form" owner="common">
+<kw name="Fill Text" owner="Browser">
+<msg time="2026-06-17T11:25:14.920323" level="INFO">Fills the text 'Test User' in the given field.</msg>
+<arg>css=[data-testid="contact-name"]</arg>
+<arg>${name}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.918130" elapsed="0.012628"/>
+</kw>
+<kw name="Fill Text" owner="Browser">
+<msg time="2026-06-17T11:25:14.933075" level="INFO">Fills the text 'test@example.com' in the given field.</msg>
+<arg>css=[data-testid="contact-email"]</arg>
+<arg>${email}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.930943" elapsed="0.011710"/>
+</kw>
+<kw name="Fill Text" owner="Browser">
+<msg time="2026-06-17T11:25:14.944998" level="INFO">Fills the text 'This is a valid test message for the contact form.' in the given field.</msg>
+<arg>css=[data-testid="contact-message"]</arg>
+<arg>${message}</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.942856" elapsed="0.011140"/>
+</kw>
+<arg>Test User</arg>
+<arg>test@example.com</arg>
+<arg>This is a valid test message for the contact form.</arg>
+<doc>Fill all contact form fields using stable data-testid selectors.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.915837" elapsed="0.038282"/>
+</kw>
+<kw name="Submit Contact Form" owner="common">
+<kw name="Click" owner="Browser">
+<msg time="2026-06-17T11:25:14.957743" level="INFO">Clicks the element 'css=[data-testid="contact-submit"]'.</msg>
+<arg>css=[data-testid="contact-submit"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.955951" elapsed="1.422398"/>
+</kw>
+<doc>Click the contact form submit button.</doc>
+<status status="PASS" start="2026-06-17T11:25:14.954346" elapsed="1.424244"/>
+</kw>
+<kw name="Text By Test Id Should Contain" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:16.468721" level="INFO">Waited for Element with selector css=[data-testid="contact-success"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.381721" elapsed="0.087185"/>
+</kw>
+<kw name="Get Text" owner="Browser">
+<msg time="2026-06-17T11:25:16.496890" level="INFO">Text: ['Contact request received']</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>contains</arg>
+<arg>${expected_text}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.469477" elapsed="0.027557"/>
+</kw>
+<arg>contact-success</arg>
+<arg>Contact request received</arg>
+<doc>Assert element text contains expected string.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.378902" elapsed="0.118240"/>
+</kw>
+<msg time="2026-06-17T11:25:16.506673" level="INFO">Switching context to context=31beebea-4278-457f-81ae-d49a8af4ee79 in CURRENT</msg>
+<msg time="2026-06-17T11:25:16.511634" level="INFO">Successfully changed active context: context=31beebea-4278-457f-81ae-d49a8af4ee79</msg>
+<msg time="2026-06-17T11:25:16.523543" level="INFO">Successfully closed Context</msg>
+<doc>TC-007: Valid form submission shows success feedback from the API.</doc>
+<tag>contact</tag>
+<tag>p1</tag>
+<tag>portfolio</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<status status="PASS" start="2026-06-17T11:25:14.438267" elapsed="2.059040"/>
+</test>
+<test id="s1-s1-t8" name="CV Download And Link Are Visible" line="67">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:16.532038" level="INFO">${url} = http://localhost:3000/#cv</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.529814" elapsed="0.002254"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:16.873268" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000/#cv</msg>
+<msg time="2026-06-17T11:25:16.873493" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.532179" elapsed="0.341445"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:16.904858" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.873859" elapsed="0.031152"/>
+</kw>
+<arg>/#cv</arg>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.527701" elapsed="0.377404"/>
+</kw>
+<kw name="Section Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:16.915490" level="INFO">Waited for Element with selector css=#cv at state visible</msg>
+<arg>css=#${section_id}</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.907463" elapsed="0.008180"/>
+</kw>
+<arg>cv</arg>
+<doc>Assert a page section is present by HTML id.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.905305" elapsed="0.010431"/>
+</kw>
+<kw name="Element By Test Id Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:16.928704" level="INFO">Waited for Element with selector css=[data-testid="cv-download"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.919017" elapsed="0.009835"/>
+</kw>
+<arg>cv-download</arg>
+<doc>Assert an element with data-testid is visible.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.916072" elapsed="0.012871"/>
+</kw>
+<kw name="Element By Test Id Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:16.942376" level="INFO">Waited for Element with selector css=[data-testid="cv-linkedin"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.932383" elapsed="0.010144"/>
+</kw>
+<arg>cv-linkedin</arg>
+<doc>Assert an element with data-testid is visible.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.929168" elapsed="0.013446"/>
+</kw>
+<msg time="2026-06-17T11:25:16.955023" level="INFO">Switching context to context=80b5c922-5d6f-4c68-8c18-1ef4dbac0feb in CURRENT</msg>
+<msg time="2026-06-17T11:25:16.960544" level="INFO">Successfully changed active context: context=80b5c922-5d6f-4c68-8c18-1ef4dbac0feb</msg>
+<msg time="2026-06-17T11:25:16.965247" level="INFO">Successfully closed Context</msg>
+<doc>TC-008: CV download button and LinkedIn link are visible.</doc>
+<tag>cv</tag>
+<tag>p2</tag>
+<tag>portfolio</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<status status="PASS" start="2026-06-17T11:25:16.524015" elapsed="0.418726"/>
+</test>
+<test id="s1-s1-t9" name="Language Toggle Placeholder Is Visible" line="75">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:16.978229" level="INFO">${url} = http://localhost:3000</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.974536" elapsed="0.003722"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:17.335194" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000</msg>
+<msg time="2026-06-17T11:25:17.335267" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.978363" elapsed="0.357015"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:17.360935" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.335561" elapsed="0.025529"/>
+</kw>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:16.969858" elapsed="0.391325"/>
+</kw>
+<kw name="Element By Test Id Should Be Visible" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:17.369881" level="INFO">Waited for Element with selector css=[data-testid="language-toggle"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.363214" elapsed="0.006789"/>
+</kw>
+<arg>language-toggle</arg>
+<doc>Assert an element with data-testid is visible.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.361405" elapsed="0.008680"/>
+</kw>
+<kw name="Get Text" owner="Browser">
+<msg time="2026-06-17T11:25:17.391566" level="INFO">Text: ['EN']</msg>
+<arg>css=[data-testid="language-toggle"]</arg>
+<arg>==</arg>
+<arg>EN</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.370243" elapsed="0.021419"/>
+</kw>
+<msg time="2026-06-17T11:25:17.401273" level="INFO">Switching context to context=c76ddaaf-59b4-4fad-8faf-b4f703d98e0a in CURRENT</msg>
+<msg time="2026-06-17T11:25:17.405364" level="INFO">Successfully changed active context: context=c76ddaaf-59b4-4fad-8faf-b4f703d98e0a</msg>
+<msg time="2026-06-17T11:25:17.410315" level="INFO">Successfully closed Context</msg>
+<doc>TC-009: FI/EN language toggle placeholder is visible and clickable.</doc>
+<tag>i18n</tag>
+<tag>p2</tag>
+<tag>portfolio</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<status status="PASS" start="2026-06-17T11:25:16.965559" elapsed="0.426636"/>
+</test>
+<test id="s1-s1-t10" name="Page Title And Main Heading Are Correct" line="82">
+<kw name="Open CV Portfolio" owner="common">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-06-17T11:25:17.418127" level="INFO">${url} = http://localhost:3000</msg>
+<var>${url}</var>
+<arg>'${path}' != '${EMPTY}'</arg>
+<arg>${BASE_URL}${path}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.415993" elapsed="0.002158"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2026-06-17T11:25:17.746299" level="INFO">Successfully initialized new page object and opened url: http://localhost:3000</msg>
+<msg time="2026-06-17T11:25:17.746383" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>${url}</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.418237" elapsed="0.328271"/>
+</kw>
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:17.767719" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="hero-title"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.746657" elapsed="0.021208"/>
+</kw>
+<doc>Open the portfolio at BASE_URL with an optional path or hash.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.413861" elapsed="0.354096"/>
+</kw>
+<kw name="Get Title" owner="Browser">
+<msg time="2026-06-17T11:25:17.773478" level="INFO">Title: 'CV Portfolio | Software Tester &amp; QA Engineer'</msg>
+<arg>contains</arg>
+<arg>Software Tester</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.768103" elapsed="0.005438"/>
+</kw>
+<kw name="Text By Test Id Should Contain" owner="common">
+<kw name="Wait For Elements State" owner="Browser">
+<msg time="2026-06-17T11:25:17.779932" level="INFO">Waited for Element with selector css=[data-testid="hero-title"] at state visible</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>visible</arg>
+<arg>timeout=10s</arg>
+<tag>PageContent</tag>
+<tag>Wait</tag>
+<doc>Waits for the element found by ``selector`` to satisfy state option.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.775033" elapsed="0.004975"/>
+</kw>
+<kw name="Get Text" owner="Browser">
+<msg time="2026-06-17T11:25:17.798808" level="INFO">Text: ['Quality assurance and test automation']</msg>
+<arg>css=[data-testid="${test_id}"]</arg>
+<arg>contains</arg>
+<arg>${expected_text}</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns text attribute of the element found by ``selector``.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.780102" elapsed="0.018808"/>
+</kw>
+<arg>hero-title</arg>
+<arg>${EXPECTED_HERO_HEADING}</arg>
+<doc>Assert element text contains expected string.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.773739" elapsed="0.025265"/>
+</kw>
+<msg time="2026-06-17T11:25:17.808050" level="INFO">Switching context to context=ce3a8b7c-8e33-4d65-9b56-dcd9a219b760 in CURRENT</msg>
+<msg time="2026-06-17T11:25:17.812199" level="INFO">Successfully changed active context: context=ce3a8b7c-8e33-4d65-9b56-dcd9a219b760</msg>
+<msg time="2026-06-17T11:25:17.820237" level="INFO">Successfully closed Context</msg>
+<doc>TC-010: Browser title and primary h1 heading match expected content.</doc>
+<tag>home</tag>
+<tag>p1</tag>
+<tag>portfolio</tag>
+<tag>smoke</tag>
+<tag>ui</tag>
+<status status="PASS" start="2026-06-17T11:25:17.410731" elapsed="0.388411"/>
+</test>
+<kw name="Suite Browser Teardown" owner="common" type="TEARDOWN">
+<kw name="Close Browser" owner="Browser">
+<msg time="2026-06-17T11:25:17.861146" level="INFO">Closed browser</msg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2026-06-17T11:25:17.823408" elapsed="0.037890"/>
+</kw>
+<status status="PASS" start="2026-06-17T11:25:17.820863" elapsed="0.040524"/>
+</kw>
+<doc>UI tests for the CV Portfolio website (software tester / QA focus).
+Requires the app running at BASE_URL (default http://localhost:3000).</doc>
+<status status="PASS" start="2026-06-17T11:25:08.537095" elapsed="9.324322"/>
+</suite>
+<status status="PASS" start="2026-06-17T11:25:08.510517" elapsed="9.356352"/>
+</suite>
+<statistics>
+<total>
+<stat pass="10" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="3" fail="0" skip="0">contact</stat>
+<stat pass="1" fail="0" skip="0">cv</stat>
+<stat pass="2" fail="0" skip="0">home</stat>
+<stat pass="1" fail="0" skip="0">i18n</stat>
+<stat pass="1" fail="0" skip="0">navigation</stat>
+<stat pass="8" fail="0" skip="0">p1</stat>
+<stat pass="2" fail="0" skip="0">p2</stat>
+<stat pass="10" fail="0" skip="0">portfolio</stat>
+<stat pass="1" fail="0" skip="0">projects</stat>
+<stat pass="1" fail="0" skip="0">qa</stat>
+<stat pass="10" fail="0" skip="0">smoke</stat>
+<stat pass="10" fail="0" skip="0">ui</stat>
+<stat pass="2" fail="0" skip="0">validation</stat>
+</tag>
+<suite>
+<stat name="Robot" id="s1" pass="10" fail="0" skip="0">Robot</stat>
+<stat name="Portfolio" id="s1-s1" pass="10" fail="0" skip="0">Robot.Portfolio</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
