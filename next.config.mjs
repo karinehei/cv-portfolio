@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 
-/** GitHub Pages project site: https://<user>.github.io/cv-portfolio-qa/ */
-const GITHUB_PAGES_REPO = "cv-portfolio-qa";
+/** GitHub Pages project site: https://<user>.github.io/<repo-name>/ */
+const GITHUB_PAGES_REPO =
+  process.env.GITHUB_PAGES_REPO || "cv-portfolio";
 const isGithubPages = process.env.GITHUB_PAGES === "true";
 const basePath = isGithubPages ? `/${GITHUB_PAGES_REPO}` : "";
 

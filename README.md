@@ -378,16 +378,24 @@ For hiring managers and recruiters: clone the repository, run `npm run dev`, ope
 
 This project uses **Next.js 14** (not Vite). The live portfolio can be published as a **static export** to GitHub Pages.
 
-**Published URL (project site):** `https://<your-username>.github.io/cv-portfolio-qa/`
+**Published URL (project site):** `https://<your-username>.github.io/<repository-name>/`
 
-The `basePath` and `assetPrefix` are set to `/cv-portfolio-qa` when `GITHUB_PAGES=true`. If your repository name differs, update `GITHUB_PAGES_REPO` in `next.config.mjs`.
+For this repo (`karinehei/cv-portfolio`): `https://karinehei.github.io/cv-portfolio/`
+
+The `basePath` matches the **GitHub repository name** automatically in CI (`GITHUB_PAGES_REPO`). Locally, set it when building:
+
+```bash
+GITHUB_PAGES_REPO=cv-portfolio npm run build:pages
+```
 
 ### One-time setup on GitHub
 
-1. Push this repository to GitHub (repository name should match `cv-portfolio-qa`, or update config as above).
-2. Open **Settings → Pages**.
-3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-4. Push to `main` or `master`, or run the **Deploy to GitHub Pages** workflow manually (**Actions → Deploy to GitHub Pages → Run workflow**).
+1. Push this repository to GitHub.
+2. Open **Settings → Pages** ([direct link for this repo](https://github.com/karinehei/cv-portfolio/settings/pages)).
+3. Under **Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
+4. Click **Save** if shown, then push to `main`/`master` or re-run **Deploy to GitHub Pages**.
+
+If deploy fails with **`Failed to create deployment (status: 404)`**, Pages is almost always still set to “Deploy from a branch” or Pages has never been enabled — repeat step 3.
 
 ### How deployment works
 
@@ -404,7 +412,7 @@ Local preview of the Pages build:
 ```bash
 npm run build:pages
 npx serve out
-# Open http://localhost:<port>/cv-portfolio-qa/  (not / — basePath is required)
+# Open http://localhost:<port>/cv-portfolio/  (match GITHUB_PAGES_REPO / repo name)
 ```
 
 ### Static hosting limitations
@@ -427,8 +435,8 @@ For a working contact form in production, deploy to Vercel, Netlify, or another 
 
 If the page loads but styles or scripts are missing:
 
-1. **Check the URL** — project sites must include the repo path: `/cv-portfolio-qa/`, not only `github.io`.
-2. **Verify `basePath`** — `next.config.mjs` sets `basePath` and `assetPrefix` to `/cv-portfolio-qa` when `GITHUB_PAGES=true`.
+1. **Check the URL** — project sites must include the repo path: `/cv-portfolio/`, not only `github.io`.
+2. **Verify `basePath`** — must match the repository name (e.g. `cv-portfolio` for `karinehei/cv-portfolio`).
 3. **Rebuild** — re-run the Deploy workflow after config changes.
 4. **Browser cache** — hard refresh (Ctrl+Shift+R) or try a private window.
 5. **`.nojekyll`** — `public/.nojekyll` is copied to `out/` so GitHub Pages does not ignore paths starting with `_` (Next.js assets).

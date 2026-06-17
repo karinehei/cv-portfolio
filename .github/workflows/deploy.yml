@@ -4,7 +4,12 @@
 #   Settings → Pages → Build and deployment → Source: GitHub Actions
 #
 # Live URL (project site):
-#   https://<your-username>.github.io/cv-portfolio-qa/
+#   https://<your-username>.github.io/<repository-name>/
+#
+# REQUIRED — if deploy fails with 404 "Failed to create deployment":
+#   1. Open https://github.com/<owner>/<repo>/settings/pages
+#   2. Build and deployment → Source: GitHub Actions  (NOT "Deploy from a branch")
+#   3. Save, then re-run this workflow
 #
 # Note: API routes (POST /api/contact) are excluded from the static build.
 # Newman/Robot API tests still run in qa-tests.yml against a Node server.
@@ -36,7 +41,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: npm
 
       - name: Install dependencies
@@ -50,6 +55,8 @@ jobs:
 
       - name: Build static export for GitHub Pages
         run: npm run build:pages
+        env:
+          GITHUB_PAGES_REPO: ${{ github.event.repository.name }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

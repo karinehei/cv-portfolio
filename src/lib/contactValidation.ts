@@ -14,17 +14,6 @@ export const CONTACT_MESSAGES_EN: ContactMessages = {
     `The form has ${count} error${count === 1 ? "" : "s"}. Please review the fields below.`,
 };
 
-/** @deprecated Use locale-specific messages from i18n translations */
-export const CONTACT_MESSAGES = {
-  nameRequired: CONTACT_MESSAGES_EN.nameRequired,
-  emailRequired: CONTACT_MESSAGES_EN.emailRequired,
-  emailInvalid: CONTACT_MESSAGES_EN.emailInvalid,
-  messageRequired: CONTACT_MESSAGES_EN.messageRequired,
-  messageMinLength: CONTACT_MESSAGES_EN.messageMinLength,
-  invalidBody: CONTACT_MESSAGES_EN.invalidBody,
-  success: CONTACT_MESSAGES_EN.success,
-} as const;
-
 export interface ContactFields {
   name: string;
   email: string;

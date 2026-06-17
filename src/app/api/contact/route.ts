@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-  CONTACT_MESSAGES,
+  CONTACT_MESSAGES_EN,
   getFirstValidationMessage,
   hasFieldErrors,
   validateContactFields,
@@ -19,16 +19,19 @@ export async function POST(request: NextRequest) {
     body = await request.json();
   } catch {
     return NextResponse.json(
-      { success: false, message: CONTACT_MESSAGES.invalidBody },
+      { success: false, message: CONTACT_MESSAGES_EN.invalidBody },
       { status: 400 }
     );
   }
 
-  const errors = validateContactFields({
-    name: body.name ?? "",
-    email: body.email ?? "",
-    message: body.message ?? "",
-  });
+  const errors = validateContactFields(
+    {
+      name: body.name ?? "",
+      email: body.email ?? "",
+      message: body.message ?? "",
+    },
+    CONTACT_MESSAGES_EN
+  );
 
   if (hasFieldErrors(errors)) {
     return NextResponse.json(
@@ -49,7 +52,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(
     {
       success: true,
-      message: CONTACT_MESSAGES.success,
+      message: CONTACT_MESSAGES_EN.success,
     },
     { status: 200 }
   );
