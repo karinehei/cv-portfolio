@@ -10,7 +10,7 @@ Designed for **software tester / QA engineer** job applications in Finland and i
 ### Reviewer quick path (5 minutes)
 
 1. Read [`docs/test-summary-report.md`](docs/test-summary-report.md) — cycle results and release recommendation  
-2. Open [GitHub Actions](https://github.com/karinehei/cv-portfolio/actions) — CI: lint, build, Newman (7 API tests), Robot (16 UI tests)  
+2. Open [GitHub Actions](https://github.com/karinehei/cv-portfolio/actions) — CI: lint, build, Newman (7 API tests); Robot UI tests run manually via **Robot UI Tests** workflow  
 3. Skim [`docs/traceability-matrix.md`](docs/traceability-matrix.md) — feature → test case → automation  
 4. Browse [`docs/test-cases.md`](docs/test-cases.md) and [`docs/bug-reports.md`](docs/bug-reports.md) — Jira/Xray-style artefacts  
 5. Run locally: `npm run dev` → open `http://localhost:3000` → try **EN / FI** language switcher
@@ -88,7 +88,7 @@ The application is intentionally lean — no external database or auth — so th
 | **Jenkins (concept)** | Same pipeline stages documented for enterprise CI/CD environments |
 | **Jira / Xray-style docs** | Test plan, test cases, bug reports, and test summary in `docs/` |
 
-**CI workflow:** [`.github/workflows/qa-tests.yml`](.github/workflows/qa-tests.yml)
+**CI workflows:** [`.github/workflows/qa-tests.yml`](.github/workflows/qa-tests.yml) (every push/PR) · [`.github/workflows/robot-tests.yml`](.github/workflows/robot-tests.yml) (manual UI tests)
 
 ---
 
@@ -101,7 +101,7 @@ The application is intentionally lean — no external database or auth — so th
 | **Functional — UI** | Page load, navigation, section visibility, theme toggle, EN/FI language switch, CV links |
 | **Functional — form** | Required fields, email format, message length, client-side errors, success feedback |
 | **Functional — API** | Valid payloads, missing fields, invalid email, short message, malformed JSON |
-| **Regression** | Robot smoke suite + Newman collection on each CI run |
+| **Regression** | Newman collection on each CI run; Robot smoke suite (manual workflow or local) |
 | **Accessibility** | Semantic HTML, keyboard navigation, focus states, form ARIA, color contrast (WCAG 2.1 AA target) |
 | **Performance (baseline)** | JMeter scenarios for `GET /` and `POST /api/contact` |
 | **Static quality** | ESLint, TypeScript compile check, production build |
@@ -472,7 +472,7 @@ GitHub Pages serves **static files only**:
 | **Contact form submit** | **Web3Forms** (with `WEB3FORMS_ACCESS_KEY`) | Built-in API or Web3Forms |
 | **`POST /api/contact`** | Not available | Works (CI / local without Web3Forms key) |
 
-Newman API tests and Robot contact tests still run in [`.github/workflows/qa-tests.yml`](.github/workflows/qa-tests.yml) against the Node server and `/api/contact` — that remains the authoritative API test environment in CI.
+Newman API tests run in [`.github/workflows/qa-tests.yml`](.github/workflows/qa-tests.yml) on every push. Robot UI tests run via [`.github/workflows/robot-tests.yml`](.github/workflows/robot-tests.yml) (manual) or locally — see `tests/robot/`.
 
 ### Troubleshooting broken CSS or assets
 

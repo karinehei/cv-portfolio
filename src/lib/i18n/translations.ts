@@ -169,7 +169,7 @@ const en: SiteTranslations = {
         path: ".github/workflows/qa-tests.yml",
         label: "CI pipeline",
         description:
-          "GitHub Actions — lint, typecheck, build, Newman API tests, and Robot Framework UI tests on every push.",
+          "GitHub Actions — lint, typecheck, build, and Newman API tests on every push; Robot UI tests via a separate manual workflow.",
       },
     ],
   },
@@ -431,7 +431,7 @@ const fi: SiteTranslations = {
         path: ".github/workflows/qa-tests.yml",
         label: "CI-putki",
         description:
-          "GitHub Actions — lint, typecheck, build, Newman API -testit ja Robot UI -testit jokaisella pushilla.",
+          "GitHub Actions — lint, typecheck, build ja Newman API -testit jokaisella pushilla; Robot UI -testit erillisessä manuaalisessa workflowssa.",
       },
     ],
   },

@@ -105,6 +105,10 @@ Defined in `resources/common.robot`:
 - **Contact success test fails** — API must respond; run Newman against `/api/contact` if needed.
 - **Slow first test** — Browser library downloads browsers on first `rfbrowser init`.
 
-## CI (optional)
+## CI (manual)
 
-The workflow [`.github/workflows/qa-tests.yml`](../../.github/workflows/qa-tests.yml) runs Robot tests in CI and uploads HTML reports as artifacts.
+Robot UI tests are **not** run on every push (Chromium setup is slow on GitHub-hosted runners). Run them manually:
+
+**Actions → Robot UI Tests → Run workflow**
+
+Workflow: [`.github/workflows/robot-tests.yml`](../../.github/workflows/robot-tests.yml) — uploads HTML reports as artifacts.

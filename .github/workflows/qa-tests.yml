@@ -1,8 +1,5 @@
-# QA pipeline for the CV portfolio project.
-# Demonstrates continuous testing: static checks, build, API (Newman), UI (Robot Framework).
-#
-# Fast path: PRs run lint + build + Newman only (~5 min).
-# Robot UI runs on push to main/master and manual workflow_dispatch (~8–12 min cold, faster with caches).
+# QA pipeline — fast checks on every push and PR (~5 min).
+# UI automation (Robot Framework) runs separately: see robot-tests.yml (manual trigger).
 
 name: QA Tests
 
@@ -11,11 +8,10 @@ on:
     branches: [main, master, develop]
   pull_request:
     branches: [main, master, develop]
-  workflow_dispatch:
 
 concurrency:
   group: qa-tests-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   static-and-api:
@@ -62,77 +58,3 @@ jobs:
           fi
           npx --yes newman run tests/postman/contact-api.postman_collection.json \
             --env-var "baseUrl=http://127.0.0.1:3000"
-
-  robot-ui:
-    name: Robot UI tests
-    # Skip on PRs and develop — Robot + Chromium is slow; runs on main/master push or manual trigger.
-    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      GITHUB_PAGES: ""
-      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.playwright-browsers
-      UV_SYSTEM_PYTHON: 1
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: npm
-
-      - name: Install Node dependencies
-        run: npm ci
-
-      - name: Production build
-        run: npm run build
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Setup uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
-          cache-dependency-glob: tests/robot/requirements.txt
-
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: .playwright-browsers
-          key: playwright-${{ runner.os }}-${{ hashFiles('tests/robot/requirements.txt') }}
-          restore-keys: |
-            playwright-${{ runner.os }}-
-
-      - name: Install Robot Framework dependencies
-        run: |
-          uv pip install --system -r tests/robot/requirements.txt
-          rfbrowser init chromium
-
-      - name: Run Robot Framework UI tests
-        run: |
-          npm run start > /tmp/app-server.log 2>&1 &
-          npx --yes wait-on http-get://127.0.0.1:3000 --timeout 120000
-          mkdir -p tests/robot/results
-          robot \
-            --variable BASE_URL:http://127.0.0.1:3000 \
-            --variable HEADLESS:True \
-            --outputdir tests/robot/results \
-            tests/robot
-
-      - name: Upload Robot Framework reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: robot-framework-reports-${{ github.run_number }}
-          path: |
-            tests/robot/results/output.xml
-            tests/robot/results/log.html
-            tests/robot/results/report.html
-          retention-days: 14
-          if-no-files-found: warn
